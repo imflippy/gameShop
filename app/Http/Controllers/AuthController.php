@@ -155,7 +155,7 @@ class AuthController extends FrontEndController
 
     public function contactPage() {
         $this->data['numberOfWishes'] = UserWishes::numberUserWishes();
-        
+
         return view('pages.contact', $this->data);
     }
 

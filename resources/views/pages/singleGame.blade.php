@@ -70,16 +70,16 @@
 {{--                            <span>Out Of Stock</span>--}}
 {{--                            @endif--}}
 {{--                        </span>--}}
-                        <span class="availability">Availability:
-                                <span>In Stock</span>
-                        </span>
+{{--                        <span class="availability">Availability:--}}
+{{--                                <span>In Stock</span>--}}
+{{--                        </span>--}}
 
-                        <div class="quantity-genres">
+                        <div class="quantity-genres mb-3">
 
-                            <div class="quantity">
-                                <h5>Quantity</h5>
-                                <div class="pro-qty"><input type="text" value="1"></div>
-                            </div>
+{{--                            <div class="quantity">--}}
+{{--                                <h5>Quantity</h5>--}}
+{{--                                <div class="pro-qty"><input type="text" value="1"></div>--}}
+{{--                            </div>--}}
 
                             <div class="genres">
                                 <h5>Genre</h5>
@@ -96,10 +96,14 @@
 
                         <div class="actions">
 
-                            <a href="#" class="add-to-cart" data-idgame="{{ $game->id_game }}"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                            @if(session()->has('user'))
+
+                                <a href="#" class="add-to-cart auth" data-idgame="{{ $id_game }}" tabindex="0"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                            @else
+                                <a href="#" class="add-to-cart nauth"  tabindex="0"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                            @endif
 
                             <div class="wishlist-compare">
-                                <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
                                 <a href="#" class="addWish"  data-idgame="{{ $game->id_game }}" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
                             </div>
 
@@ -118,7 +122,6 @@
 
                 <ul class="single-product-tab-list nav">
                     <li><a href="#product-description" class="active" data-toggle="tab" >description</a></li>
-                    <li><a href="#product-specifications" data-toggle="tab" >specifications</a></li>
                     <li><a href="#product-reviews" data-toggle="tab" >reviews</a></li>
                 </ul>
 
@@ -139,18 +142,6 @@
                             </div>
                         </div>
 
-                    </div>
-                    <div class="tab-pane fade" id="product-specifications">
-                        <div class="single-product-specification">
-                            <ul>
-                                <li>Full HD Camcorder</li>
-                                <li>Dual Video Recording</li>
-                                <li>X type battery operation</li>
-                                <li>Full HD Camcorder</li>
-                                <li>Dual Video Recording</li>
-                                <li>X type battery operation</li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="tab-pane fade" id="product-reviews">
 

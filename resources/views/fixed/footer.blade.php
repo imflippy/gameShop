@@ -142,7 +142,7 @@
     </div><!-- Footer Bottom Section Start -->
 
 </div><!-- Footer Section End -->
-
+<div class="modal"><!-- Place at bottom of page --></div>
 
 <!-- JS
 ============================================ -->

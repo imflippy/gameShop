@@ -2,11 +2,22 @@
 const pageUrl = window.location.href;
 const rootUrl = document.location.hostname + ":" +document.location.port;
 
+$body = $("body");
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
+
+$(document).on({
+
+
+    ajaxStart: function() { $body.addClass("loading");    },
+    ajaxStop: function() { $body.removeClass("loading"); }
+});
+
+
 
 //login Page
 $("#showReset").click(function (e) {
@@ -90,9 +101,10 @@ function addWish() {
         },
         error: function (xhr, status, error) {
             status = xhr.status;
-            if(status == 404) {
+            if(status === 404) {
                 swal("You must login to achive wish command", '', "error");
             }
+
         }
     })
 }
@@ -227,7 +239,10 @@ else{
 
 
 
-    $(".add-to-cart").click(dodajUkorpu);
+    $(".auth").click(dodajUkorpu);
+    $(".nauth").click(function () {
+        swal("You must login to achive wish command", '', "error");
+    });
 
 
 function dodajUkorpu(){

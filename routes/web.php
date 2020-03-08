@@ -35,15 +35,12 @@ Route::post('/login', 'AuthController@doLogin');
 Route::get('logout', 'AuthController@logout');
 
 
-Route::group(['middleware'  => ['authorise']], function () {
+Route::group(['middleware'  => ['authoriseLogin']], function () {
     //Wishlist Page
     Route::get('/wishlist', 'GameController@wishesPage')->name('wishlist');
 
-
-
-
-
-
+});
+Route::group(['middleware'  => ['authorise404']], function () {
     //API PREFIX
     Route::prefix('api')->group(function () {
         //Wishlist Page
@@ -51,17 +48,11 @@ Route::group(['middleware'  => ['authorise']], function () {
         Route::post('/addWish', 'GameController@addNewWish');
         Route::delete('/deleteWish', 'GameController@deleteWishFromWishes');
 
-
 //        Route::get('/getProductsForCart', 'GameController@cartGames');
     });
 
 });
 
-
-//Testing
-
-
-//Pera
 
 
 

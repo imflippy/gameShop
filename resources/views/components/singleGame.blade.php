@@ -10,10 +10,15 @@
             <a href="{{ route("games", $id_game) }}" class="img"><img src="{{ asset($single_photo) }}" alt="{{ $game_name }}"></a>
 
             <div class="wishlist-compare">
-                <a href="#" data-tooltip="Compare"><i class="ti-control-shuffle"></i></a>
                 <a href="#" class="addWish" data-idgame="{{ $id_game }}" data-tooltip="Wishlist"><i class="ti-heart"></i></a>
             </div>
-                <a href="#" class="add-to-cart" data-idgame="{{ $id_game }}" tabindex="0"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                @if(session()->has('user'))
+
+                    <a href="#" class="add-to-cart auth" data-idgame="{{ $id_game }}" tabindex="0"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                @else
+                    <a href="#" class="add-to-cart nauth"  tabindex="0"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                @endif
+
         </div>
 
         <!-- Content -->

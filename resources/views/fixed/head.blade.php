@@ -29,6 +29,7 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/mycss.css') }}">
 
     <!-- Modernizer JS -->
     <script src="{{ asset('assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
