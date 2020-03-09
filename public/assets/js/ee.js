@@ -1,6 +1,11 @@
 //constanta koja sadrzi url adresu
 const pageUrl = window.location.href;
-const rootUrl = document.location.hostname + ":" +document.location.port;
+const rootUrl = document.location.protocol +"//" + document.location.hostname + ":" +document.location.port;
+console.log(rootUrl);
+
+function appentToUrl(stringUrl) {
+    return rootUrl + stringUrl;
+}
 
 $body = $("body");
 $.ajaxSetup({
@@ -17,6 +22,116 @@ $(document).on({
     ajaxStop: function() { $body.removeClass("loading"); }
 });
 
+
+$(document).ready(function(){
+
+    /* 1. Visualizing things on Hover - See next part for action on click */
+    $('#stars li').on('mouseover', function(){
+        var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+
+        // Now highlight all the stars that's not after the current hovered star
+        $(this).parent().children('li.star').each(function(e){
+            if (e < onStar) {
+                $(this).addClass('hover');
+            }
+            else {
+                $(this).removeClass('hover');
+            }
+        });
+
+    }).on('mouseout', function(){
+        $(this).parent().children('li.star').each(function(e){
+            $(this).removeClass('hover');
+        });
+    });
+
+
+    /* 2. Action to perform on click */
+    $('#stars li').on('click', function(){
+        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+        var stars = $(this).parent().children('li.star');
+
+        for (i = 0; i < stars.length; i++) {
+            $(stars[i]).removeClass('selected');
+        }
+
+        for (i = 0; i < onStar; i++) {
+            $(stars[i]).addClass('selected');
+        }
+
+        // JUST RESPONSE (Not needed)
+
+    });
+
+
+});
+
+$('.addreview').click(addReview);
+
+function addReview() {
+    let ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+    // console.log(ratingValue);
+    let comment = $('#your-review').val();
+    let idGame = $('#hiddenGame').val();
+
+    let regRating = /[1-5]/;
+    let regComment = /[0-9A-Za-z.,\n \r?!]*/;
+
+    let errors = [];
+
+    if(comment == "") {
+        errors.push("Comment cant be empty");
+    }
+    else if(!regComment.test(comment)) {
+        errors.push("Comment in not in good format");
+    }
+
+    if(!regRating.test(ratingValue)) {
+        errors.push("You must choose rating");
+    }
+
+    if(errors.length) {
+        swal('',errors.join(), "error");
+
+    }else {
+        $.ajax({
+            url: appentToUrl('/api/addReview'),
+            method: 'POST',
+            data: {
+                ratingValue: ratingValue,
+                comment: comment,
+                idGame: idGame
+            },
+            statusCode: {
+                201: function () {
+                    swal("Thank You!", "Your reviews has been posted", "success");
+              },
+                204: function () {
+                    swal("Thank You!", "Your reviews has been updated", "success");
+                }
+
+            },
+            success: function () {
+                clearReview();
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+
+            }
+        })
+
+    }
+
+}
+
+function clearReview() {{
+    var stars = $('#stars li').parent().children('li.star');
+
+    for (i = 0; i < stars.length; i++) {
+        $(stars[i]).removeClass('selected');
+    }
+    $('#your-review').val('');
+}}
 
 
 //login Page
@@ -159,7 +274,7 @@ function prikaziKorpu(){
     } else {
         $("#numberOfCartProd").html(sumQuantity);
         $.ajax({
-            url: "api/getProductsForCart",
+            url: appentToUrl("/api/getProductsForCart"),
             method: "GET",
             dataType: "json",
             data: {
@@ -195,9 +310,9 @@ function napraviTabelu(data){
 
     function napraviTr(p){
         return ` <li>
-                    <a class="image" href="games/${p.id_game}"><img src="${p.photos[0].single_photo}" alt="Product"></a>
+                    <a class="image" href="${ appentToUrl("/games/" +p.id_game) }"><img src="${rootUrl + "/" + p.photos[0].single_photo}" alt="Product"></a>
                     <div class="content">
-                        <a href="games/${p.id_game}" class="title">${p.game_name}</a>
+                        <a href="${ appentToUrl("/games/" +p.id_game) }" class="title">${p.game_name}</a>
                         <span class="price">Price: $${calculatePrice(p.price, p.discount)}</span>
                         <span class="qty">Qty: ${p.quantity}</span>
                     </div>

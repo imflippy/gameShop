@@ -49,6 +49,10 @@ Route::group(['middleware'  => ['authorise404']], function () {
         Route::delete('/deleteWish', 'GameController@deleteWishFromWishes');
 
 //        Route::get('/getProductsForCart', 'GameController@cartGames');
+
+        //Reviews!!
+        Route::post('/addReview', "CommentsController@store");
+
     });
 
 });

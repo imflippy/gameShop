@@ -98,7 +98,7 @@
 
                             @if(session()->has('user'))
 
-                                <a href="#" class="add-to-cart auth" data-idgame="{{ $id_game }}" tabindex="0"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
+                                <a href="#" class="add-to-cart auth" data-idgame="{{ $game->id_game }}" tabindex="0"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
                             @else
                                 <a href="#" class="add-to-cart nauth"  tabindex="0"><i class="ti-shopping-cart"></i><span>ADD TO CART</span></a>
                             @endif
@@ -151,46 +151,7 @@
                                 <span>Based on 9 Comments</span>
                             </div>
                             <div class="ratting-list">
-                                <div class="sin-list float-left">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <span>(5)</span>
-                                </div>
-                                <div class="sin-list float-left">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <span>(3)</span>
-                                </div>
-                                <div class="sin-list float-left">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <span>(1)</span>
-                                </div>
-                                <div class="sin-list float-left">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <span>(0)</span>
-                                </div>
-                                <div class="sin-list float-left">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <span>(0)</span>
-                                </div>
+
                             </div>
                             <div class="rattings-wrapper">
 
@@ -246,28 +207,33 @@
                                     <div class="ratting-form row">
                                         <div class="col-12 mb-15">
                                             <h5>Rating:</h5>
-                                            <div class="ratting-star fix">
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
+                                            <div class='rating-stars'>
+                                                <ul id='stars'>
+                                                    <li class='star' title='Poor' data-value='1'>
+                                                        <i class='fa fa-star fa-fw'></i>
+                                                    </li>
+                                                    <li class='star' title='Fair' data-value='2'>
+                                                        <i class='fa fa-star fa-fw'></i>
+                                                    </li>
+                                                    <li class='star' title='Good' data-value='3'>
+                                                        <i class='fa fa-star fa-fw'></i>
+                                                    </li>
+                                                    <li class='star' title='Excellent' data-value='4'>
+                                                        <i class='fa fa-star fa-fw'></i>
+                                                    </li>
+                                                    <li class='star' title='WOW!!!' data-value='5'>
+                                                        <i class='fa fa-star fa-fw'></i>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-12 mb-15">
-                                            <label for="name">Name:</label>
-                                            <input id="name" placeholder="Name" type="text">
-                                        </div>
-                                        <div class="col-md-6 col-12 mb-15">
-                                            <label for="email">Email:</label>
-                                            <input id="email" placeholder="Email" type="text">
                                         </div>
                                         <div class="col-12 mb-15">
                                             <label for="your-review">Your Review:</label>
                                             <textarea name="review" id="your-review" placeholder="Write a review"></textarea>
                                         </div>
+                                        <input type="hidden" id="hiddenGame" value="{{ $game->id_game }}">
                                         <div class="col-12">
-                                            <input value="add review" type="submit">
+                                            <input value="add review" class="addreview" type="button">
                                         </div>
                                     </div>
                                 </form>
