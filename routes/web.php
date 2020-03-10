@@ -22,36 +22,45 @@ Route::get('/filter', 'GameController@filter')->name('filter');
 //Contact Page
 Route::get('/contact', 'AuthController@contactPage')->name('contact');
 
-//Register Controller
+//Auth Controller
 Route::get('/register', 'AuthController@indexRegister')->name('register');
 Route::post('/register', 'AuthController@doRegister')->name('doRegister');
 Route::get('/confirm/{token}', 'AuthController@confirmRegister')->where('token', '[a-z0-9A-Z]+');
 Route::patch('/reset', 'AuthController@reset')->name('reset');
 
-
-//Login Controller
 Route::get('/login', 'AuthController@indexLogin')->name('login');
 Route::post('/login', 'AuthController@doLogin');
 Route::get('logout', 'AuthController@logout');
 
 
+Route::prefix('api')->group(function () {
+    //Reviews
+    Route::get('/getAllReviewsForOneGame', "CommentsController@index");
+
+    //Wishes
+    Route::get('/numberOfWishes', 'WishController@numberOfWishes');
+});
+
+
 Route::group(['middleware'  => ['authoriseLogin']], function () {
     //Wishlist Page
-    Route::get('/wishlist', 'GameController@wishesPage')->name('wishlist');
+    Route::get('/wishlist', 'WishController@wishesPage')->name('wishlist');
 
 });
 Route::group(['middleware'  => ['authorise404']], function () {
     //API PREFIX
     Route::prefix('api')->group(function () {
         //Wishlist Page
-        Route::get('/wishlist', 'GameController@getAllWishesForOneUser');
-        Route::post('/addWish', 'GameController@addNewWish');
-        Route::delete('/deleteWish', 'GameController@deleteWishFromWishes');
+        Route::get('/wishlist', 'WishController@getAllWishesForOneUser');
+
+        Route::post('/addWish', 'WishController@addNewWish');
+        Route::delete('/deleteWish', 'WishController@deleteWishFromWishes');
 
 //        Route::get('/getProductsForCart', 'GameController@cartGames');
 
         //Reviews!!
         Route::post('/addReview', "CommentsController@store");
+        Route::delete('/deleteComment', "CommentsController@destroy");
 
     });
 

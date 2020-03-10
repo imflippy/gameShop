@@ -30,7 +30,7 @@
                     <div class="header-shop-links">
 
                         <!-- Wishlist -->
-                        <a href="{{ route('wishlist') }}" class="header-wishlist"><i class="ti-heart"></i> <span class="number">{{ $numberOfWishes }}</span></a>
+                        <a href="{{ route('wishlist') }}" class="header-wishlist"><i class="ti-heart"></i> <span class="number" id="numberOfWishes"></span></a>
 
                         @if(session()->has('user'))
                             <!-- Cart -->

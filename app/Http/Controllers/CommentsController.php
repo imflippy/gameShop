@@ -15,6 +15,15 @@ class CommentsController extends Controller
         $this->modelCommments = new Comments();
     }
 
+    public function index(Request $request) {
+        try {
+            return response($this->modelCommments->getAllReviewsForOneGame($request), 200);
+        } catch (\PDOException $ex) {
+            return response($ex->getMessage(), 500);
+        }
+
+    }
+
 
     public function store(ReviewRequest $request) {
 
@@ -26,7 +35,17 @@ class CommentsController extends Controller
             $this->modelCommments->addReview($request);
             return response(null, 201);
         } catch (\PDOException $ex){
-            return response($ex->getMessage());
+            return response($ex->getMessage(), 500);
+        }
+    }
+
+
+    public function destroy(Request $request) {
+        try {
+            $this->modelCommments->deleteComment($request);
+            return response(null, 204);
+        } catch (\PDOException $ex) {
+            return response($ex->getMessage(), 500);
         }
     }
 }

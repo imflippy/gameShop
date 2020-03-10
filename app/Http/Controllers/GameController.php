@@ -24,7 +24,6 @@ class GameController extends FrontEndController
         $game = $this->modelGames->getSingleGame($id);
 
         $this->data['game'] = $game;
-        $this->data['numberOfWishes'] = UserWishes::numberUserWishes();
 
         return view("pages.singleGame", $this->data);
     }
@@ -50,67 +49,10 @@ class GameController extends FrontEndController
 
         $this->data['games'] = $games;
         $this->data['genres'] = $genres;
-        $this->data['numberOfWishes'] = UserWishes::numberUserWishes();
 
         return view('pages.filte', $this->data);
     }
 
-
-    // WISHES
-    public function wishesPage() {
-        $this->data['numberOfWishes'] = UserWishes::numberUserWishes();
-        return view('pages.wishlish', $this->data);
-    }
-
-    public function addNewWish(Request $request) {
-        $idGame = $request->input('idGame');
-
-        if(!session()->has('user')) {
-            return response(null, 401);
-        }
-        $idUser = session('user')->id_user;
-        try {
-
-            $checkIfWishlistIsEmpty = $this->modelGames->checkIfWishIsAlreadyInList($idGame, $idUser);
-            if($checkIfWishlistIsEmpty) {
-                return response('This game is alreay in the Wishlist', 200);
-            }
-
-            $this->modelGames->addwish($idGame, $idUser);
-            return response('You have successfully added game to Wishlist', 201);
-
-        } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
-        }
-    }
-
-    public function getAllWishesForOneUser() {
-
-        $idUser = session('user')->id_user;
-
-        try {
-            $info = $this->modelGames->getAllWishesForOneUser($idUser);
-            GetGamePhotos::getGamePhotos($info);
-
-            return response($info);
-
-        } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
-        }
-    }
-
-    public function deleteWishFromWishes(Request $request) {
-        $idWish = $request->input('idWish');
-
-        try {
-            $this->modelGames->deleteWishFromWishes($idWish);
-
-            return response(null, 204);
-        } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
-        }
-
-    }
 
 
     public function cartGames(Request $request) {

@@ -44,7 +44,6 @@ class AuthController extends FrontEndController
 
         $this->data['form'] = $form;
         $this->data['button']  =$button;
-        $this->data['numberOfWishes'] = UserWishes::numberUserWishes();
 
         return view("pages.login", $this->data);
     }
@@ -102,7 +101,6 @@ class AuthController extends FrontEndController
 
         $this->data['form'] = $form;
         $this->data['button'] = $button;
-        $this->data['numberOfWishes'] = UserWishes::numberUserWishes();
 
         return view("pages.register", $this->data);
     }

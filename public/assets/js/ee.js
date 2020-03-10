@@ -1,7 +1,6 @@
 //constanta koja sadrzi url adresu
 const pageUrl = window.location.href;
 const rootUrl = document.location.protocol +"//" + document.location.hostname + ":" +document.location.port;
-console.log(rootUrl);
 
 function appentToUrl(stringUrl) {
     return rootUrl + stringUrl;
@@ -24,6 +23,11 @@ $(document).on({
 
 
 $(document).ready(function(){
+
+    if(pageUrl.indexOf("games") != -1){
+        getAllReviewsForOneGame();
+    }
+    numberOfWishes();
 
     /* 1. Visualizing things on Hover - See next part for action on click */
     $('#stars li').on('mouseover', function(){
@@ -112,6 +116,7 @@ function addReview() {
 
             },
             success: function () {
+                getAllReviewsForOneGame();
                 clearReview();
             },
             error: function (xhr, status, error) {
@@ -123,6 +128,100 @@ function addReview() {
     }
 
 }
+
+
+function getAllReviewsForOneGame() {
+    let idGame = $('.auth').data('idgame');
+    $.ajax({
+        url: appentToUrl('/api/getAllReviewsForOneGame'),
+        method: 'GET',
+        dataType: 'json',
+        data: {
+          idGame: idGame
+        },
+        success: function (data) {
+            printReviews(data);
+            calculateScore(data);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function printReviews(data) {
+    let html = '';
+    data.forEach(d => {
+       html += `
+             <div class="sin-rattings">
+                <div class="ratting-author">
+                    <h3>${d.username}</h3>
+                    <div class="ratting-star">
+                        ${printStars(d.stars)}
+                        <span>(${d.stars})</span>
+                    </div>
+                   ${showDeleteButtonForAdmin(d.id_comment)}
+                </div>
+                <p>${d.comment}</p>
+            </div>
+       `
+    });
+
+    $("#allReviews").html(html);
+}
+
+function printStars(stars) {
+    let html = '';
+    for (let i = 0; i < stars; i++) {
+        html += '<i class="fa fa-star"></i>';
+    }
+    for (let i = 0; i < 5 - stars; i++) {
+        html += '<i class="fa fa-star-o"></i>';
+    }
+    return html;
+}
+
+function calculateScore(data) {
+    if (data.length){
+        let sumStars = 0;
+        data.forEach(d => {
+            sumStars += d.stars;
+        });
+
+        $('#score').html(sumStars / data.length);
+        $('#numberOfComments').html("Based on " + data.length + " Comments");
+
+    } else {
+        $('#score').html('No comments yet..');
+        $('#numberOfComments').html("");
+    }
+}
+
+function showDeleteButtonForAdmin(id_comment) {
+    if (idRole == 1) {
+        return `<button class="remove" onclick="deleteComment(${id_comment})"><i class="fa fa-trash-o"></i></button>`;
+    } else {
+        return '';
+    }
+}
+
+function deleteComment(id_comment) {
+    $.ajax({
+        url: appentToUrl('/api/deleteComment'),
+        method: "delete",
+        data: {
+            id_comment: id_comment
+        },
+        success: function () {
+            getAllReviewsForOneGame();
+            swal("Nice!", "Review has been deleted", "success");
+        },
+        error: function (xhr ,status, error) {
+            console.log(error);
+        }
+    });
+}
+
 
 function clearReview() {{
     var stars = $('#stars li').parent().children('li.star');
@@ -163,6 +262,7 @@ function getAllWishesForOneUser() {
         dataType: 'json',
         success: function (data) {
             printAllWishes(data);
+            numberOfWishes();
         },
         error: function (xhr, status, error) {
             console.log(error);
@@ -207,12 +307,13 @@ function addWish() {
         statusCode: {
             200: function (data) {
                 swal(data, '',  "info");
-
             },
             201: function (data) {
                 swal("Good job!", data, "success");
-
             }
+        },
+        success: function () {
+            numberOfWishes();
         },
         error: function (xhr, status, error) {
             status = xhr.status;
@@ -250,6 +351,20 @@ function calculatePrice(price, discount) {
     } else {
         return parseInt(price) - discount/100*parseInt(price);
     }
+}
+
+function numberOfWishes() {
+    $.ajax({
+        url: appentToUrl('/api/numberOfWishes'),
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            $('#numberOfWishes').html(data);
+        },
+        error: function (xhr ,status, error) {
+            console.log(error);
+        }
+    })
 }
 
 //end wish page

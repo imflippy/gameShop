@@ -143,7 +143,11 @@
 
 </div><!-- Footer Section End -->
 <div class="modal"><!-- Place at bottom of page --></div>
-
+<script>
+    @if(session()->has('user'))
+        const idRole = '{{ session('user')->id_role }}';
+    @endif
+</script>
 <!-- JS
 ============================================ -->
 

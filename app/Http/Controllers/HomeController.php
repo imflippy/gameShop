@@ -21,7 +21,6 @@ class HomeController extends FrontEndController
         $games = $this->modelGames->getTo6Games();
         GetGamePhotos::getGamePhotos($games);
 
-        $this->data['numberOfWishes'] = UserWishes::numberUserWishes();
         $this->data['games'] = $games;
         return view("pages.home", $this->data);
     }

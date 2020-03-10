@@ -63,29 +63,13 @@
                             <p>{{ $game->game_info }} </p>
                         </div>
 
-{{--                        <span class="availability">Availability:--}}
-{{--                            @if($game->availability > 0)--}}
-{{--                            <span>In Stock</span>--}}
-{{--                            @else--}}
-{{--                            <span>Out Of Stock</span>--}}
-{{--                            @endif--}}
-{{--                        </span>--}}
-{{--                        <span class="availability">Availability:--}}
-{{--                                <span>In Stock</span>--}}
-{{--                        </span>--}}
 
                         <div class="quantity-genres mb-3">
-
-{{--                            <div class="quantity">--}}
-{{--                                <h5>Quantity</h5>--}}
-{{--                                <div class="pro-qty"><input type="text" value="1"></div>--}}
-{{--                            </div>--}}
 
                             <div class="genres">
                                 <h5>Genre</h5>
 
                                     @foreach($game->genres as $c)
-{{--                                    <a href="{{ $c->id_genre   }}">{{ $c->genre }}</a>--}}
                                     <a href="{{ route('filter', ['genre[]' => $c->id_genre]) }}">{{ $c->genre }}</a>
                                     @endforeach
 
@@ -130,16 +114,9 @@
 
                         <div class="row">
                             <div class="single-product-description-content col-lg-8 col-12">
-                                <h4>Introducing Flex 3310</h4>
-                                <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora in</p>
-                                <h4>Stylish Design</h4>
-                                <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci veli</p>
-                                <h4>Digital Camera, FM Radio & many more...</h4>
-                                <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci veli</p>
+                                {{ $game->game_info }}
                             </div>
-                            <div class="single-product-description-image col-lg-4 col-12">
-                                <img src="assets/images/single-product/description.png" alt="description">
-                            </div>
+
                         </div>
 
                     </div>
@@ -147,58 +124,14 @@
 
                         <div class="product-ratting-wrap">
                             <div class="pro-avg-ratting">
-                                <h4>4.5 <span>(Overall)</span></h4>
-                                <span>Based on 9 Comments</span>
+                                <h4><span id="score"></span> <span>(Overall)</span></h4>
+                                <span id="numberOfComments"></span>
                             </div>
                             <div class="ratting-list">
 
                             </div>
-                            <div class="rattings-wrapper">
+                            <div class="rattings-wrapper" id="allReviews">
 
-                                <div class="sin-rattings">
-                                    <div class="ratting-author">
-                                        <h3>Cristopher Lee</h3>
-                                        <div class="ratting-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <span>(5)</span>
-                                        </div>
-                                    </div>
-                                    <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci veli</p>
-                                </div>
-
-                                <div class="sin-rattings">
-                                    <div class="ratting-author">
-                                        <h3>Nirob Khan</h3>
-                                        <div class="ratting-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <span>(5)</span>
-                                        </div>
-                                    </div>
-                                    <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci veli</p>
-                                </div>
-
-                                <div class="sin-rattings">
-                                    <div class="ratting-author">
-                                        <h3>MD.ZENAUL ISLAM</h3>
-                                        <div class="ratting-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <span>(5)</span>
-                                        </div>
-                                    </div>
-                                    <p>enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia res eos qui ratione voluptatem sequi Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci veli</p>
-                                </div>
 
                             </div>
                             <div class="ratting-form-wrapper fix">
