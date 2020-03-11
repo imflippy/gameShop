@@ -6,6 +6,15 @@ function appentToUrl(stringUrl) {
     return rootUrl + stringUrl;
 }
 
+function responseOfRequest(data) {
+    var errors = data.responseJSON;
+    if (errors.errors){
+        let firstMessageError = Object.values(errors.errors)[0];
+        console.log(firstMessageError)
+        swal(firstMessageError[0], '', 'error');
+    }
+}
+
 $body = $("body");
 $.ajaxSetup({
     headers: {
@@ -74,30 +83,14 @@ $('.addreview').click(addReview);
 
 function addReview() {
     let ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+    if (!ratingValue) {
+        ratingValue = 0;
+    }
     // console.log(ratingValue);
     let comment = $('#your-review').val();
     let idGame = $('#hiddenGame').val();
 
-    let regRating = /[1-5]/;
-    let regComment = /[0-9A-Za-z.,\n \r?!]*/;
-
-    let errors = [];
-
-    if(comment == "") {
-        errors.push("Comment cant be empty");
-    }
-    else if(!regComment.test(comment)) {
-        errors.push("Comment in not in good format");
-    }
-
-    if(!regRating.test(ratingValue)) {
-        errors.push("You must choose rating");
-    }
-
-    if(errors.length) {
-        swal('',errors.join(), "error");
-
-    }else {
+    console.log(ratingValue);
         $.ajax({
             url: appentToUrl('/api/addReview'),
             method: 'POST',
@@ -112,23 +105,23 @@ function addReview() {
               },
                 204: function () {
                     swal("Thank You!", "Your reviews has been updated", "success");
+                },
+                404: function () {
+                    swal("You must login to achive wish command", '', "error");
+                },
+                500: function () {
+                    swal('We will fix this ASAP', '', "error");
                 }
-
             },
             success: function () {
                 getAllReviewsForOneGame();
                 clearReview();
             },
-            error: function (xhr, status, error) {
-                console.log(error);
-
+            error: function (data) {
+                responseOfRequest(data);
             }
         })
-
-    }
-
 }
-
 
 function getAllReviewsForOneGame() {
     let idGame = $('.auth').data('idgame');
@@ -189,6 +182,7 @@ function calculateScore(data) {
         });
 
         $('#score').html(sumStars / data.length);
+        $("#score-ratt").html(sumStars / data.length + " / 5 <i class='fa fa-star' style=\"position:absolute;\"></i>");
         $('#numberOfComments').html("Based on " + data.length + " Comments");
 
     } else {
@@ -471,7 +465,7 @@ else{
 
     $(".auth").click(dodajUkorpu);
     $(".nauth").click(function () {
-        swal("You must login to achive wish command", '', "error");
+        swal("You must login to achive cart command", '', "error");
     });
 
 
@@ -531,3 +525,57 @@ function dodajUkorpu(){
     }
 }
 
+
+
+//subscribe
+
+$('#subscribeToNews').click(addSubscriber);
+
+function addSubscriber() {
+    let email = $('#mc-email').val();
+
+    $.ajax({
+        url: appentToUrl('/api/addSubscriber'),
+        method: 'POST',
+        data: {
+            email, email
+        },
+        statusCode: {
+          500: function () {
+              swal('We will fix this ASAP', '', "error");
+          }
+        },
+        success: function () {
+            swal('Thank You', 'You have successfully subscribed.', 'success');
+            $('#mc-email').val('');
+        },
+        error: function (data) {
+            responseOfRequest(data);
+        }
+    });
+
+}
+
+
+$('#sendContact').click(sendContact);
+
+function sendContact() {
+    let email = $("#email-contact").val();
+    console.log(email)
+    let message = $("#message").val();
+
+    $.ajax({
+        url: appentToUrl('/api/sendContact'),
+        method: 'POST',
+        data: {
+            email: email,
+            message: message
+        },
+        success: function () {
+            swal('Thanks for contacting us.', '', 'success');
+        },
+        error: function (data) {
+            responseOfRequest(data);
+        }
+    });
+}

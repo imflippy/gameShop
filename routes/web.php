@@ -10,25 +10,28 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'HomeController@index')->name('home');
-
-// Single Game Page
-Route::get('/games/{id}', 'GameController@single')->where('id', '[0-9]+')->name('games');
-
-//Filter Page
-Route::get('/filter', 'GameController@filter')->name('filter');
+//FrontEndController
+Route::get('/', 'FrontEndController@home')->name('home');
 
 //Contact Page
-Route::get('/contact', 'AuthController@contactPage')->name('contact');
+Route::get('/contact', 'FrontEndController@contactPage')->name('contact');
+//Filter Page
+Route::get('/filter', 'FrontEndController@filter')->name('filter');
+//Register page
+Route::get('/register', 'FrontEndController@indexRegister')->name('register');
+//Login page
+Route::get('/login', 'FrontEndController@indexLogin')->name('login');
+
+//EndFrontEndController
+
+// Single Game Page
+Route::get('/games/{id}', 'FrontEndController@single')->where('id', '[0-9]+')->name('games');
 
 //Auth Controller
-Route::get('/register', 'AuthController@indexRegister')->name('register');
 Route::post('/register', 'AuthController@doRegister')->name('doRegister');
 Route::get('/confirm/{token}', 'AuthController@confirmRegister')->where('token', '[a-z0-9A-Z]+');
 Route::patch('/reset', 'AuthController@reset')->name('reset');
 
-Route::get('/login', 'AuthController@indexLogin')->name('login');
 Route::post('/login', 'AuthController@doLogin');
 Route::get('logout', 'AuthController@logout');
 
@@ -39,12 +42,18 @@ Route::prefix('api')->group(function () {
 
     //Wishes
     Route::get('/numberOfWishes', 'WishController@numberOfWishes');
+
+    //Subscriber
+    Route::post('/addSubscriber', 'AuthController@addSubscriber');
+
+    //Contact Form
+    Route::post('/sendContact', 'AuthController@sendContact');
 });
 
 
 Route::group(['middleware'  => ['authoriseLogin']], function () {
     //Wishlist Page
-    Route::get('/wishlist', 'WishController@wishesPage')->name('wishlist');
+    Route::get('/wishlist', 'FrontEndController@wishesPage')->name('wishlist'); //FrontEndController Wish Page requires Session
 
 });
 Route::group(['middleware'  => ['authorise404']], function () {

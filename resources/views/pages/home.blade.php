@@ -34,6 +34,7 @@
                     <!-- Hero Slider Start -->
                     <div class="hero-slider hero-slider-three fix">
 
+                        @foreach($slider as $s)
                         <!-- Hero Item Start -->
                         <div class="hero-item-three" style="background-image: url({{ asset('assets/images/hero/hero-3-bg-1.jpg') }})">
                             <div class="row align-items-center justify-content-between">
@@ -41,41 +42,20 @@
                                 <!-- Hero Content -->
                                 <div class="hero-content-three col">
 
-                                    <h2 class="offer">50% <span>OFF</span></h2>
-                                    <h1>MAKE <br> FRESH JUICE <br> ANY WHERE</h1>
-                                    <a href="#">get it now</a>
+                                    <h2 class="offer">{{ $s->discount }}% <span>OFF</span></h2>
+                                    <h1>PLAY <br> {{ $s->game_name }} <br> ANY TIME</h1>
+                                    <a href="{{ route("games", $s->id_game) }}">get it now</a>
 
                                 </div>
 
                                 <!-- Hero Image -->
                                 <div class="hero-image-three col">
-                                    <img src="assets/images/hero/hero-6.png" alt="Hero Image">
+                                    <img src="{{ asset($s->photos[0]->single_photo) }}" alt="{{ $s->game_name }}">
                                 </div>
 
                             </div>
                         </div><!-- Hero Item End -->
-
-                        <!-- Hero Item Start -->
-                        <div class="hero-item-three" style="background-image: url({{ asset('assets/images/hero/hero-3-bg-1.jpg') }})">
-                            <div class="row align-items-center justify-content-between">
-
-                                <!-- Hero Content -->
-                                <div class="hero-content-three col">
-
-                                    <h2 class="offer">50% <span>OFF</span></h2>
-                                    <h1>MAKE <br> FRESH JUICE <br> ANY WHERE</h1>
-                                    <a href="#">get it now</a>
-
-                                </div>
-
-                                <!-- Hero Image -->
-                                <div class="hero-image-three col">
-                                    <img src="assets/images/hero/hero-6.png" alt="Hero Image">
-                                </div>
-
-                            </div>
-                        </div><!-- Hero Item End -->
-
+                        @endforeach
                     </div><!-- Hero Slider End -->
 
                 </div>
@@ -109,7 +89,8 @@
                                                                             'id_category' => $p->id_category,
                                                                             'discount' => $p->discount,
                                                                             'price' => $p->price,
-                                                                            'id_game' => $p->id_game
+                                                                            'id_game' => $p->id_game,
+                                                                            'stars' => $p->stars
                                                                         ])
                                     @endcomponent
                                 @endforeach

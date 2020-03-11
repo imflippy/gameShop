@@ -14,7 +14,7 @@ class SendMailer
 {
 
 
-    public static function sendMail($title, $subject, $body) {
+    public static function sendMail($title, $subject, $body, $reciver) {
         $mail = new PHPMailer(true);
 
         try {
@@ -31,7 +31,7 @@ class SendMailer
             $mail->Port = 587;
 
             $mail->setFrom('happenings1566@gmail.com', $title);
-            $mail->addAddress('filip.minic98@gmail.com');
+            $mail->addAddress($reciver);
 
             $mail->isHTML(true);
             // Set email format to HTML

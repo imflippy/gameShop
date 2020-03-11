@@ -34,10 +34,12 @@
     color: #202020 !important;
     text-transform: uppercase !important;
     font-weight: 700 !important;
+    border-radius: 50px;
+    margin-right: 70px;
 }
 
 #reset_yes {
-    float: right;
+    margin-left: 70px;
 }
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddSubscriberRequest;
+use App\Http\Requests\ContactRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ResetRequest;
@@ -20,32 +22,6 @@ class AuthController extends FrontEndController
     {
         parent::__construct();
         $this->modelUser = new User();
-    }
-
-    public function indexLogin() {
-
-        $form = [
-            [
-                "type" => 'text',
-                "name" => 'username',
-                "placeholder" => "Type your username"
-            ],
-            [
-                "type" => 'password',
-                "name" => 'password',
-                "placeholder" => "Type your password"
-            ]
-        ];
-
-        $button = [
-            "name" => "login",
-            "value" => "LOGIN"
-        ];
-
-        $this->data['form'] = $form;
-        $this->data['button']  =$button;
-
-        return view("pages.login", $this->data);
     }
 
     public function doLogin(LoginRequest $request) {
@@ -70,41 +46,6 @@ class AuthController extends FrontEndController
         return redirect()->route('login')->with('success', 'You are not logged anymore!');
     }
 
-    public function indexRegister() {
-        $form = [
-            [
-                "name" => 'username',
-                "placeholder" => "Your username here",
-                "value" => old('username')
-            ],
-            [
-                "type" => 'email',
-                "name" => 'email',
-                "placeholder" => "Your email here",
-                "value" =>  old('email')
-            ],
-            [
-                "type" => 'password',
-                "name" => 'password',
-                "placeholder" => "Enter passward"
-            ],
-            [
-                "type" => 'password',
-                "name" => 'confirmPassword',
-                "placeholder" => "Confirm password"
-            ]
-        ];
-        $button = [
-            "name" => "register",
-            "value" => "register"
-        ];
-
-        $this->data['form'] = $form;
-        $this->data['button'] = $button;
-
-        return view("pages.register", $this->data);
-    }
-
     public function doRegister(RegistrationRequest $request) {
         $username = $request->input('username');
         $email = $request->input('email');
@@ -118,8 +59,8 @@ class AuthController extends FrontEndController
             $title = 'E&E Email Verification Required';
             $body = "Activate your account by clicking on: <a href='http://127.0.0.1:8000/confirm/{$token}'>This link</a>";
             $subject = 'Activation';
-
-            SendMailer::sendMail($title, $subject, $body);
+            $adminMail = 'filip.minic98@gmail.com';
+            SendMailer::sendMail($title, $subject, $body, $adminMail);
 
             return redirect()->back()->with('success', 'Go to your mail and confirm registration');
 
@@ -146,16 +87,32 @@ class AuthController extends FrontEndController
         $body ="Your new password is: {$newPass}";
         $subject = 'Password Reset';
 
-        SendMailer::sendMail($title, $subject, $body);
+        $adminMail = 'filip.minic98@gmail.com'; // privremeno
+        SendMailer::sendMail($title, $subject, $body, $adminMail);
         return redirect()->route('login')->with('success', "Check mail for new password.");
 
     }
 
-    public function contactPage() {
-        $this->data['numberOfWishes'] = UserWishes::numberUserWishes();
 
-        return view('pages.contact', $this->data);
+
+    public function sendContact(ContactRequest $request) {
+        try {
+            $title = "Contact - Form";
+            $adminMail = 'filip.minic98@gmail.com';
+
+            SendMailer::sendMail($title, $request->input('email'), $request->input('message'), $adminMail);
+            return response(null, 201);
+        } catch (\PDOException $ex) {
+            return response($ex->getMessage(), 500);
+        }
     }
 
+    public function addSubscriber(AddSubscriberRequest $request) {
+        try {
+            $this->modelUser->addSubscriber($request);
+        } catch (\PDOException $ex) {
+            return response(["Error with register" => $ex->getMessage()], 500);
+        }
+    }
 
 }

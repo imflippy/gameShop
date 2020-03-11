@@ -601,11 +601,11 @@ function mailChimpResponse(resp) {
 /*--
 	Twitter Feed
 -----------------------------------*/
-$('.footer-tweet').twittie({
-    template: '<span class="author">{{screen_name}}</span>, {{tweet}}',
-    count: 2,
-    apiPath: 'assets/api/tweet.php',
-});
+// $('.footer-tweet').twittie({
+//     template: '<span class="author">{{screen_name}}</span>, {{tweet}}',
+//     count: 2,
+//     apiPath: 'assets/api/tweet.php',
+// });
 
 /*--
     Scroll Up

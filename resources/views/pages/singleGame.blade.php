@@ -51,12 +51,8 @@
 
                     <div class="single-product-description">
 
-                        <div class="ratting">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
+                        <div class="ratting" >
+                            Ratting score: <span id="score-ratt" style="position: relative">No score</span>
                         </div>
 
                         <div class="desc">

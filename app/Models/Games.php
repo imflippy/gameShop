@@ -44,6 +44,10 @@ class Games
             ->where('games.id_game', '=', $id)
             ->first();
 
+        if(!$gameDetails) {
+            return $gameDetails;
+        }
+
         $gameDetails->genres = $this->getSingleGameGenress($id);
         $gameDetails->photos = $this->getSingleGamePhotos($id);
 
@@ -88,6 +92,12 @@ class Games
         return \DB::table('games')->whereIn('id_game', $idGames)->get();
     }
 
+    public function getTop3UpdatedGamesWithBiggestDiscout() {
+        return \DB::table('games')
+            ->orderByDesc('updated_at')
+            ->orderByDesc('discount')
+            ->where('discount', '>', 0)
+            ->take(3)->get();
 
-
+    }
 }

@@ -62,4 +62,8 @@ class Comments
             ->delete();
     }
 
+    public function getSingleGameStars($idGames) {
+        return \DB::table('comments')->where('id_game', '=', $idGames)->select('stars')->get();
+    }
+
 }

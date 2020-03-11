@@ -55,48 +55,8 @@
                     <div class="main-menu menu-3">
                         <nav>
                             <ul>
-                                <li>
-                                    <a href="{{ route('home') }}">HOME</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('filter') }}">Shop</a>
-                                </li>
-                                <li class="menu-item-has-children"><a href="#">PAGES</a>
-                                    <ul class="mega-menu three-column">
-                                        <li><a href="#">Column One</a>
-                                            <ul>
-                                                <li><a href="about-us-dark.html">About us</a></li>
-                                                <li><a href="banner-dark.html">Banner</a></li>
-                                                <li><a href="best-deals-dark.html">Best Deals</a></li>
-                                                <li><a href="buttons-dark.html">Buttons</a></li>
-                                                <li><a href="cart-dark.html">Cart</a></li>
-                                                <li><a href="checkout-dark.html">Checkout</a></li>
-                                                <li><a href="clients-dark.html">Clients</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Column Two</a>
-                                            <ul>
-                                                <li><a href="compare-dark.html">Compare</a></li>
-                                                <li><a href="faq-dark.html">Faq</a></li>
-                                                <li><a href="feature-dark.html">Feature</a></li>
-                                                <li><a href="login-dark.html">Login</a></li>
-                                                <li><a href="register-dark.html">Register</a></li>
-                                                <li><a href="store-dark.html">Store</a></li>
-                                                <li><a href="tabs-dark.html">Tabs</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Column Three</a>
-                                            <ul>
-                                                <li><a href="team-dark.html">Team</a></li>
-                                                <li><a href="terms-conditions-dark.html">Terms & Conditions</a></li>
-                                                <li><a href="testimonial-dark.html">Testimonial</a></li>
-                                                <li><a href="track-order-dark.html">Track Order</a></li>
-                                                <li><a href="typography-dark.html">Typography</a></li>
-                                                <li><a href="wishlist-dark.html">Wishlist</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
+                                <li><a href="{{ route('home') }}">HOME</a></li>
+                                <li><a href="{{ route('filter') }}">Shop</a></li>
                                 <li><a href="{{ route('contact') }}">CONTACT</a></li>
                             </ul>
                         </nav>
@@ -118,17 +78,9 @@
                     <div class="header-advance-search">
 
                         <form action="{{ route('filter') }}" method="GET">
-{{--                            <div class="input"><input type="text" name="search" placeholder="Search your product"></div>--}}
                             @component("components.formElements.textBox", ['name' => 'search', 'placeholder' => 'Search your product', 'class' => 'input'])
                             @endcomponent
-{{--                            <div class="select">--}}
-{{--                                <select class="nice-select" name="categories" multiple>--}}
-{{--                                    <option value="0">All Categories</option>--}}
-{{--                                    @foreach($categories as $cat)--}}
-{{--                                    <option value="{{ $cat->id_category }}">{{ $cat->category }}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
+
                             <div class="submit"><button><i class="icofont icofont-search-alt-1"></i></button></div>
 
                         </form>

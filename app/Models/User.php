@@ -7,6 +7,8 @@
 namespace App\Models;
 
 
+use App\Http\Requests\AddSubscriberRequest;
+
 class User
 {
     public function register($username, $email, $password, $token, $created_at) {
@@ -33,6 +35,11 @@ class User
             ->where('email', $email)
             ->update(['password' => md5($password)]);
 
+    }
+
+    public function addSubscriber(AddSubscriberRequest $request) {
+        \DB::table('subscribers')
+            ->insert(['email' => $request->input('email')]);
     }
 
 

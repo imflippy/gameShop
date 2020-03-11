@@ -108,11 +108,14 @@
                                                                     'id_category' => $p->id_category,
                                                                     'discount' => $p->discount,
                                                                     'price' => $p->price,
-                                                                    'id_game' => $p->id_game
+                                                                    'id_game' => $p->id_game,
+                                                                    'stars' => $p->stars
                                                                     ])
                             @endcomponent
                         @endforeach
-
+                        @if(!count($games))
+                            <h2>No games for this filter. Please try another.</h2>
+                        @endif
                     </div><!-- Shop Product Wrap End -->
 
                     <div class="row mt-30">

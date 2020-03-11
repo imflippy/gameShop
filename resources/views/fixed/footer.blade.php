@@ -16,10 +16,23 @@
             <!-- Mailchimp Subscribe Form Start -->
             <div class="col-lg-6 col-12 mb-15 mt-15">
 
-                <form id="mc-form" class="mc-form subscribe-form" >
-                    <input id="mc-email" type="email" autocomplete="off" placeholder="Enter your email here" />
-                    <button id="mc-submit">subscribe</button>
-                </form>
+{{--                <form id="" class="mc-form subscribe-form" >--}}
+{{--                    <input id="mc-email" type="email" autocomplete="off" placeholder="Enter your email here" />--}}
+{{--                    <button id="subscribeToNews">subscribe</button>--}}
+{{--                </form>--}}
+                <div id="" class="mc-form subscribe-form" >
+                    @component('components.formElements.textBox', [
+                                                                        'id' => 'mc-email',
+                                                                        'placeholder' => 'Enter your email here',
+                                                                        'type' => 'email',
+                                                                        'class' => ''
+                                                                    ])
+                    @endcomponent
+{{--                    <input id="mc-email" type="email" autocomplete="off" placeholder="Enter your email here" />--}}
+{{--                    <button id="subscribeToNews">subscribe</button>--}}
+                    @component('components.formElements.button', ['type' => 'button', 'id' => 'subscribeToNews', 'value' => 'subscribe'])
+                    @endcomponent
+                </div>
                 <!-- mailchimp-alerts Start -->
                 <div class="mailchimp-alerts text-centre">
                     <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
@@ -35,87 +48,50 @@
 <!-- Footer Section Start -->
 <div class="footer-section section bg-ivory">
 
-    <!-- Footer Top Section Start --><div class="footer-top-section section pt-90 pb-50">
+    <!-- Footer Top Section Start --><div class="footer-top-section section pt-10">
         <div class="container">
 
             <div class="row">
-
-                <!-- Footer Widget Start -->
                 <div class="col-lg-3 col-md-6 col-12 mb-40">
-                    <div class="footer-widget">
 
-                        <h4 class="widget-title">CONTACT INFO</h4>
-
-                        <p class="contact-info">
-                            <span>Address</span>
-                            You address will be here <br>
-                            Lorem Ipsum text                        </p>
-
-                        <p class="contact-info">
-                            <span>Game</span>
-                            <a href="tel:01234567890">01234 567 890</a>
-                            <a href="tel:01234567891">01234 567 891</a>
-                        </p>
-
-                        <p class="contact-info">
-                            <span>Web</span>
-                            <a href="mailto:info@example.com">info@example.com</a>
-                            <a href="#">www.example.com</a>
-                        </p>
-
-                    </div>
                 </div><!-- Footer Widget End -->
-
                 <!-- Footer Widget Start -->
-                <div class="col-lg-3 col-md-6 col-12 mb-40">
+                <div class="col-lg-4 col-md-6 col-12 mb-40">
                     <div class="footer-widget">
 
-                        <h4 class="widget-title">CUSTOMER CARE</h4>
+                        <h4 class="widget-title">Pages</h4>
+                        <ul>
 
-                        <ul class="link-widget">
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Features</a></li>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Cart</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Wishlist</a></li>
-                            <li><a href="#">blog</a></li>
-                            <li><a href="#">Contact</a></li>
+                        <p class="contact-info">
+                        <li><a href="{{ route('home') }}">HOME</a></li>
+                        </p>
+                        <p class="contact-info">
+                            <li><a href="{{ route('filter') }}">Shop</a></li>
+                        </p>
+                        <p class="contact-info">
+                            <li><a href="{{ route('contact') }}">CONTACT</a></li>
+                        </p>
                         </ul>
 
                     </div>
                 </div><!-- Footer Widget End -->
 
                 <!-- Footer Widget Start -->
-                <div class="col-lg-3 col-md-6 col-12 mb-40">
+                <div class="col-lg-4 col-md-6 col-12 mb-40">
                     <div class="footer-widget">
 
-                        <h4 class="widget-title">INFORMATION</h4>
+                        <h4 class="widget-title">CATEGORIES</h4>
 
                         <ul class="link-widget">
-                            <li><a href="#">Track your order</a></li>
-                            <li><a href="#">Locate Store</a></li>
-                            <li><a href="#">Online Support</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
-                            <li><a href="#">Payment</a></li>
-                            <li><a href="#">Shipping & Returns</a></li>
-                            <li><a href="#">Gift coupon</a></li>
-                            <li><a href="#">Special coupon</a></li>
+                            @foreach($categories as $c)
+                                <li><a href="{{ route('filter', ['cat[]' => $c->id_category]) }}">{{ $c->category }}</a></li>
+                            @endforeach
                         </ul>
 
-                    </div>
-                </div><!-- Footer Widget End -->
-
-                <!-- Footer Widget Start -->
-                <div class="col-lg-3 col-md-6 col-12 mb-40">
-                    <div class="footer-widget">
-
-                        <h4 class="widget-title">LATEST TWEET</h4>
-
-                        <div class="footer-tweet"></div>
 
                     </div>
                 </div><!-- Footer Widget End -->
+
 
             </div>
 

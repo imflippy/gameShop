@@ -15,11 +15,6 @@ class WishController extends FrontEndController
         $this->modelWishes = new Wishes();
     }
 
-    // WISHES
-    public function wishesPage() {
-        return view('pages.wishlish', $this->data);
-    }
-
     public function addNewWish(Request $request) {
         $idGame = $request->input('idGame');
 

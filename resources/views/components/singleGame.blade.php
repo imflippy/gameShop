@@ -44,11 +44,17 @@
                     @endif
                 </h5>
                 <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
+                    @if(count($stars))
+                        <p>Ratting:  @php
+                                    $sumStars = 0;
+                                    foreach ($stars as $s) {
+                                            $sumStars = $sumStars +$s->stars;
+                                    }
+                                    echo $sumStars / count($stars);
+                                @endphp<i class='fa fa-star' style="float: right;"></i></p>
+                    @else
+                        <p>No score</p>
+                    @endif
                 </div>
 
             </div>

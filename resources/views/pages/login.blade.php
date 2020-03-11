@@ -73,7 +73,7 @@
                                                 @endcomponent
                                             </div>
                                             <div class="buttons_reset">
-                                                @component("components.formElements.button", ["value" => "Confirm!", "id" => "reset_yes"])
+                                                @component("components.formElements.button", ["value" => "Confirm!", "id" => "reset_yes", 'type' => 'submit'])
                                                 @endcomponent
                                                 @component("components.formElements.button", ["value" => "Cancel!", "id" => "reset_cancel", "type" => "button"])
                                                 @endcomponent
