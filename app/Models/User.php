@@ -8,6 +8,8 @@ namespace App\Models;
 
 
 use App\Http\Requests\AddSubscriberRequest;
+use App\Http\Requests\AddUserRequest;
+use App\Http\Requests\EditUserRequest;
 
 class User
 {
@@ -43,4 +45,57 @@ class User
     }
 
 
+    //Admin
+    public function getAllUsers() {
+        return \DB::table('users')
+            ->join('roles', 'users.id_role', '=', 'roles.id_role')
+            ->select('id_user', 'username', 'email', 'active', 'role')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(5);
+    }
+
+    public function getAllRoles() {
+        return \DB::table('roles')->get();
+    }
+
+    public function registerUser(AddUserRequest $request) {
+        \DB::table('users')->insert(
+            [
+                'username' => $request->get('username'),
+                'email' => $request->get('email'),
+                'password' => md5($request->get('password')),
+                'token' => sha1(rand()) . time(),
+                'active' => $request->get('activity'),
+                'created_at' => date("Y-m-d H-i-s", time()),
+                'updated_at' => date("Y-m-d H-i-s", time()),
+                'id_role' => $request->get('rolesDll')
+            ]
+        );
+    }
+
+    public function deleteUser($id) {
+        \DB::table('users')
+            ->where(['id_user' => $id])
+            ->delete();
+    }
+
+    public function getOneUser($id) {
+        return \DB::table('users')
+            ->select('id_user', 'username', 'email', 'active', 'id_role')
+            ->where(['id_user' => $id])
+            ->first();
+    }
+
+    public function updateUser(EditUserRequest $request, $id) {
+        \DB::table('users')
+            ->where('id_user', $id)
+            ->update([
+                'username' => $request->input('username'),
+                'email' => $request->input('email'),
+                'token' => sha1(rand()) . time(),
+                'active' => $request->get('activity'),
+                'updated_at' => date("Y-m-d H-i-s", time()),
+                'id_role' => $request->get('rolesDll')
+            ]);
+    }
 }

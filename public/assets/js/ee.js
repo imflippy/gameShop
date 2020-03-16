@@ -187,6 +187,7 @@ function calculateScore(data) {
 
     } else {
         $('#score').html('No comments yet..');
+        $("#score-ratt").html('No score');
         $('#numberOfComments').html("");
     }
 }
@@ -459,6 +460,10 @@ else{
 }
 
 
+function obrisiCeluKorpu() {
+    localStorage.removeItem('products');
+}
+
 
 
 
@@ -578,4 +583,39 @@ function sendContact() {
             responseOfRequest(data);
         }
     });
+}
+
+
+//Checkout functions
+
+$('.checkout').click(checkout);
+
+function checkout() {
+    let products = gamesUkorpi();
+    let idsProd = [];
+    let sumQuantity = 0;
+
+    if (products) {
+        $.ajax({
+            url: appentToUrl('/api/addToOrders'),
+            method: 'POST',
+            data: {
+                products: products
+            },
+            success: function () {
+                swal('', 'Your order is on pending, You will recive mail when we approve purchase.', 'success');
+                obrisiCeluKorpu();
+                pokaziPraznuKorpu();
+            },
+            error: function (data) {
+                swal('We will fix this ASAP', '', 'error');
+                //Zelim da vratim defaultnu gresku zato sto korisnik ne unosi sam podatke u array ali ako pokusa neke mutne radnje nad localstorage onda ce uci u error -- request validira svaki element niza products
+                // responseOfRequest(data);
+            }
+
+        });
+    } else {
+        swal('Your cart is empty', '', 'info');
+    }
+
 }

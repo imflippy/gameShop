@@ -10,13 +10,13 @@ use App\Models\Genres;
 use App\Models\Games;
 use Illuminate\Http\Request;
 
-class GameController extends FrontEndController
+class GameController extends Controller
 {
-
+    private $modelGames;
 
     public function __construct()
     {
-        parent::__construct();
+        $this->modelGames = new Games();
 
     }
 

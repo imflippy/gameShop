@@ -6,12 +6,11 @@ use App\Http\Services\GetGamePhotos;
 use App\Models\Wishes;
 use Illuminate\Http\Request;
 
-class WishController extends FrontEndController
+class WishController extends Controller
 {
     private $modelWishes;
     public function __construct()
     {
-        parent::__construct();
         $this->modelWishes = new Wishes();
     }
 

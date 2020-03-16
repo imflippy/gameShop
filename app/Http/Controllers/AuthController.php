@@ -14,13 +14,12 @@ use Illuminate\Http\Request;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
-class AuthController extends FrontEndController
+class AuthController extends Controller
 {
     private $modelUser;
 
     public function __construct()
     {
-        parent::__construct();
         $this->modelUser = new User();
     }
 
@@ -90,10 +89,7 @@ class AuthController extends FrontEndController
         $adminMail = 'filip.minic98@gmail.com'; // privremeno
         SendMailer::sendMail($title, $subject, $body, $adminMail);
         return redirect()->route('login')->with('success', "Check mail for new password.");
-
     }
-
-
 
     public function sendContact(ContactRequest $request) {
         try {

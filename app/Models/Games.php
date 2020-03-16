@@ -100,4 +100,11 @@ class Games
             ->take(3)->get();
 
     }
+
+    public function price_with_discount($idGame) {
+        return \DB::table('games')
+            ->select('price', 'discount')
+            ->where(['id_game' => $idGame])
+            ->first();
+    }
 }

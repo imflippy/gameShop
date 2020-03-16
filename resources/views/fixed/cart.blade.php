@@ -24,7 +24,7 @@
         <h4 class="sub-total">Total: <span id="totalPrice"></span></h4>
 
         <div class="button">
-            <a href="checkout-dark.html">CHECK OUT</a>
+            <a href="#" class="checkout">CHECK OUT</a>
         </div>
 
     </div>

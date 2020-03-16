@@ -71,12 +71,28 @@ Route::group(['middleware'  => ['authorise404']], function () {
         Route::post('/addReview', "CommentsController@store");
         Route::delete('/deleteComment', "CommentsController@destroy");
 
+        //Orders
+        Route::post('/addToOrders', 'OrdersController@store');
+
     });
 
 });
 
 
 
+
+
+
+
+//Admin Route
+
+Route::group(['middleware'  => ['admin']], function () {
+    //API PREFIX
+    Route::prefix('admin')->group(function () {
+        Route::resource('/users', 'Admin\UsersController');
+    });
+
+});
 
 
 
