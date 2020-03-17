@@ -29,7 +29,7 @@ class EditUserRequest extends FormRequest
             'email' => 'required|email:rfc,dns|unique:users,email,'. end($arrayOfUrl) .',id_user',
             'activity' => 'not_in:1000|numeric',
             'rolesDll' => 'not_in:1000|numeric',
-            'id_user' => 'numeric'
+            'id_user' => 'required|numeric'
         ];
     }
 }

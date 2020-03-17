@@ -64,7 +64,7 @@
             'arrayInputs' => $arrayInputs,
             'button' => '',
             'arrayDropdowns' => $arrayDropdowns,
-            'id_user' => $getUser->id_user
+            'id' => $getUser->id_user
         ])
     @endcomponent
 

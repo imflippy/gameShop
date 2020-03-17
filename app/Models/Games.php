@@ -12,7 +12,7 @@ class Games
     public function getTo6Games() {
         return \DB::table('games')
             ->join('categories', 'games.id_category', '=', 'categories.id_category')
-            ->latest()
+            ->latest('games.created_at')
             ->limit(6)
             ->get();
     }

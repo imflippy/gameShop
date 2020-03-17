@@ -31,8 +31,8 @@
                 <div class="card mb-5 shadow-sm">
                     <h5 class="card-header">Basic Form</h5>
                     <div class="card-body">
-                        @if(isset($id_user))
-                            <form action="{{ route($action, $id_user) }}" method="post">
+                        @if(isset($id))
+                            <form action="{{ route($action, $id) }}" method="post">
                         @else
                             <form action="{{ route($action) }}" method="post">
                         @endif

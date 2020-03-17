@@ -87,11 +87,11 @@ Route::group(['middleware'  => ['authorise404']], function () {
 //Admin Route
 
 Route::group(['middleware'  => ['admin']], function () {
-    //API PREFIX
     Route::prefix('admin')->group(function () {
         Route::resource('/users', 'Admin\UsersController');
+        Route::resource('/categories', 'Admin\CategoriesController');
+        Route::resource('/genres', 'Admin\GenresController');
     });
-
 });
 
 
