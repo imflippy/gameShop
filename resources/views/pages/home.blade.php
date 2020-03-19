@@ -50,7 +50,7 @@
 
                                 <!-- Hero Image -->
                                 <div class="hero-image-three col">
-                                    <img src="{{ asset($s->photos[0]->single_photo) }}" alt="{{ $s->game_name }}">
+                                    <img src="{{ asset('/assets/images/product/' . $s->photos[0]->single_photo) }}" alt="{{ $s->game_name }}" style="width: 240px; height: 240px;border-radius: 40px">
                                 </div>
 
                             </div>

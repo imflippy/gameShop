@@ -24,6 +24,16 @@
                 @endforeach
             </div>
         @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="section-block" id="basicform">
@@ -32,9 +42,9 @@
                     <h5 class="card-header">Basic Form</h5>
                     <div class="card-body">
                         @if(isset($id))
-                            <form action="{{ route($action, $id) }}" method="post">
+                            <form action="{{ route($action, $id) }}" method="post" enctype="multipart/form-data">
                         @else
-                            <form action="{{ route($action) }}" method="post">
+                            <form action="{{ route($action) }}" method="post" enctype="multipart/form-data">
                         @endif
                             @csrf
                             @method($method)
@@ -44,7 +54,13 @@
                                         @if(!isset($input['noLabel']))
                                         <label class="col-form-label">{{ $input['label'] ?? ''}}</label>
                                         @endif
-                                        <input type="{{ $input['type'] ?? 'text' }}" name="{{ $input['name'] ?? '' }}" value="{{ $input['value'] ?? '' }}" placeholder="{{ $input['placeholder'] ?? '' }}" class="form-control">
+                                        <input type="{{ $input['type'] ?? 'text' }}"
+                                               name="{{ $input['name'] ?? '' }}"
+                                               value="{{ $input['value'] ?? '' }}"
+                                               placeholder="{{ $input['placeholder'] ?? '' }}"
+                                               id="{{ $input['id_input'] ?? ''}}"
+                                               class="form-control {{ $input['class_input'] ?? ''}}"
+                                                @if(isset($input['multiple'])) {{ $input['multiple'] }} @endif>
                                     </div>
                                 @endforeach
                             @endif
@@ -70,21 +86,53 @@
                                     </div>
                                 @endforeach
                             @endif
-{{--                            <div class="custom-file mb-3">--}}
-{{--                                <label class="custom-file-label" for="">File Input</label>--}}
-{{--                                <input type="file" class="custom-file-input" id="customFile">--}}
 
-{{--                            </div>--}}
-{{--                            <div class="form-group">--}}
-{{--                                <label for="exampleFormControlTextarea1">Example textarea</label>--}}
-{{--                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>--}}
-{{--                            </div>--}}
+                                @if(isset($textarea))
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">{{ $textarea->title }}</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" name="{{ $textarea->name }}" rows="3"></textarea>
+                                    </div>
+                                @endif
+
+                                @if(isset($arrayCheckboxs))
+                                    @foreach($arrayCheckboxs as $singleChb)
+                                        <label class="col-form-label">{{ $singleChb->label ?? ''}}</label>
+                                        <div class="form-group d-flex justify-content-around">
+                                            @foreach($singleChb->option as $input)
+
+                                                @if(in_array($input['value'], $singleChb->selected ?? []))
+                                                    <span><input type="checkbox" name="{{ $singleChb->name ?? '' }}" value="{{ $input['value'] ?? '' }}" checked="checked">{{ $input['text'] ?? '' }}</span>
+                                                @else
+                                                    <span><input type="checkbox" name="{{ $singleChb->name ?? '' }}" value="{{ $input['value'] ?? '' }}">{{ $input['text'] ?? '' }}</span>
+                                                @endif
+                                                @endforeach
+                                        </div>
+
+                                    @endforeach
+                                @endif
+
                                 @if(isset($button))
                                     <div class="form-group">
                                         <button type="{{ $button['type'] ?? 'submit' }}" name="{{ $button['name'] ?? '' }}" id="{{ $button['id'] ?? '' }}" class="btn btn-space btn-primary {{ $button['class'] ?? '' }}">{{ $button['value'] ?? 'Submit' }}</button>
                                     </div>
                                 @endif
                         </form>
+
+                            @if(isset($photos))
+                                <div class="row">
+                                @foreach($photos as $p)
+                                    <div class="col-md-6">
+                                        <form action="{{ route('destroy', $p->id_game_photos) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <img src="{{ asset('/assets/images/product/'.$p->single_photo) }}" style="width: 125px; height: 125px"/>
+                                            <button type="submit">Delete Photo</button>
+                                        </form>
+                                    </div>
+                                @endforeach
+                                </div>
+                            @endif
+
                     </div>
                 </div>
             </div>

@@ -11,6 +11,17 @@
                         Menu
                     </li>
                     <li class="nav-item ">
+                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fa fa-gamepad" aria-hidden="true"></i>Games</a>
+                        <div id="submenu-4" class="collapse submenu" style="">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('games.index') }}">Show Games</a>
+                                    <a class="nav-link" href="{{ route('games.create') }}">Add new Game</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item ">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Users</a>
                         <div id="submenu-1" class="collapse submenu" style="">
                             <ul class="nav flex-column">
@@ -43,6 +54,12 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{ route('orders.index') }}"><i class="fas fa-cart-arrow-down"></i>Orders</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{ route('subs.index') }}"><i class="fa fa-envelope" aria-hidden="true"></i> Subscription</a>
                     </li>
 
                 </ul>

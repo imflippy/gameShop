@@ -105,7 +105,7 @@
 
                 <!-- Footer Copyright -->
                 <div class="col-lg-6 col-12">
-                    <div class="footer-copyright"><p>&copy; Copyright, All Rights Reserved by <a href="#">E&E</a></p></div>
+                    <div class="footer-copyright"><p>&copy; Copyright, All Rights Reserved by <a href="https://www.linkedin.com/in/filip-minic-4963a0175/">Filip Minic 138/17</a> <a href="documentation.pdf">Documentation</a></p></div>
                 </div>
 
                 <!-- Footer Payment Support -->

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\EditUserRequest;
+use App\Models\Comments;
 use App\Models\User;
+use App\Models\Wishes;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -23,7 +25,7 @@ class UsersController extends Controller
 
     public function index()
     {
-        $users = $this->modelUser->getAllUsers();
+        $users = $this->modelUser->getAllUsersWithPagination();
 
         return view('admin.pages.users', ['users' => $users]);
     }
@@ -107,11 +109,20 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        $modelWishes = new Wishes();
+        $modelComments = new Comments();
+        \DB::beginTransaction();
         try {
+
+
+            $modelWishes->deleteUserWish($id);
+            $modelComments->deleteUserCommets($id);
             $this->modelUser->deleteUser($id);
+            \DB::commit();
             return redirect()->route('users.index')->with('success', 'User has been deleted');
         } catch (\PDOException $ex) {
 
+            \DB::rollBack();
         }
     }
 }

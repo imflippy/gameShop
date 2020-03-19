@@ -22,6 +22,7 @@ Route::get('/register', 'FrontEndController@indexRegister')->name('register');
 //Login page
 Route::get('/login', 'FrontEndController@indexLogin')->name('login');
 
+
 //EndFrontEndController
 
 // Single Game Page
@@ -33,7 +34,7 @@ Route::get('/confirm/{token}', 'AuthController@confirmRegister')->where('token',
 Route::patch('/reset', 'AuthController@reset')->name('reset');
 
 Route::post('/login', 'AuthController@doLogin');
-Route::get('logout', 'AuthController@logout');
+Route::get('logout', 'AuthController@logout')->name('logout');
 
 
 Route::prefix('api')->group(function () {
@@ -55,8 +56,13 @@ Route::group(['middleware'  => ['authoriseLogin']], function () {
     //Wishlist Page
     Route::get('/wishlist', 'FrontEndController@wishesPage')->name('wishlist'); //FrontEndController Wish Page requires Session
 
+
 });
 Route::group(['middleware'  => ['authorise404']], function () {
+    //Orders
+    Route::get('/orders', 'FrontEndController@orders')->name('orders');
+    Route::get('/singleorder/{id}', 'FrontEndController@singleorder')->name('singleorder');
+
     //API PREFIX
     Route::prefix('api')->group(function () {
         //Wishlist Page
@@ -88,9 +94,22 @@ Route::group(['middleware'  => ['authorise404']], function () {
 
 Route::group(['middleware'  => ['admin']], function () {
     Route::prefix('admin')->group(function () {
-        Route::resource('/users', 'Admin\UsersController');
-        Route::resource('/categories', 'Admin\CategoriesController');
-        Route::resource('/genres', 'Admin\GenresController');
+        Route::resource('/games', 'Admin\GamesController'); //CRUD za Games
+        Route::resource('/users', 'Admin\UsersController'); //CRUD za Users
+        Route::resource('/categories', 'Admin\CategoriesController'); // CRUD za Categories
+        Route::resource('/genres', 'Admin\GenresController'); //CRUD za Genres
+
+        Route::delete('/destroy/{id}', 'Admin\PhotosController@destroy')->where('id', '[0-9]+')->name('destroy');
+
+        Route::get('/subs', 'Admin\SubscriptionController@index')->name('subs.index');
+        Route::post('/subs', 'Admin\SubscriptionController@store')->name('subs.store');
+
+        //Route za orders
+        Route::get('/orders', 'Admin\OrdersController@index')->name('orders.index');
+        Route::get('/orders/{id}', 'Admin\OrdersController@show')->name('orders.show');
+        Route::put('/orders/confirm', 'Admin\OrdersController@confirm')->name('orders.confirm');
+        Route::put('/orders/decline', 'Admin\OrdersController@decline')->name('orders.decline');
+
     });
 });
 

@@ -9,6 +9,7 @@ use App\Http\Services\UserWishes;
 use App\Models\Categories;
 use App\Models\Games;
 use App\Models\Genres;
+use App\Models\Orders;
 
 class FrontEndController extends Controller
 {
@@ -30,6 +31,7 @@ class FrontEndController extends Controller
     // home page
     public function home() {
         $games = $this->modelGames->getTo6Games();
+
         GetGamePhotos::getGamePhotos($games);
         GetGamesStars::getGamePhotos($games);
 
@@ -37,7 +39,8 @@ class FrontEndController extends Controller
         GetGamePhotos::getGamePhotos($slider);
 
         $this->data['games'] = $games;
-        $this->data['slider'] = $slider;
+//        dd($games);
+        $this->data ['slider'] = $slider;
         return view("pages.home", $this->data);
     }
 
@@ -152,5 +155,23 @@ class FrontEndController extends Controller
     //contact page
     public function contactPage() {
         return view('pages.contact', $this->data);
+    }
+
+    public function orders() {
+        $modelOrders = new Orders();
+        $orders = $modelOrders->getAllWithPaginationForSingleUser();
+
+        $this->data['orders'] = $orders;
+        return view('pages.orders', $this->data);
+    }
+
+    public function singleorder($id) {
+        $modelOrders = new Orders();
+        $orderDetails = $modelOrders->getOrder($id);
+        GetGamePhotos::getGamePhotos($orderDetails);
+
+        $this->data['orderDetails'] = $orderDetails;
+
+        return view('pages.singleorder', $this->data);
     }
 }

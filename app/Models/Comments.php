@@ -66,4 +66,11 @@ class Comments
         return \DB::table('comments')->where('id_game', '=', $idGames)->select('stars')->get();
     }
 
+    public function deleteCommentWithidGame($idGame) {
+        \DB::table('comments')->where(['id_game' => $idGame])->delete();
+    }
+    public function deleteUserCommets($idUser) {
+        \DB::table('comments')->where(['id_user' => $idUser])->delete();
+    }
+
 }

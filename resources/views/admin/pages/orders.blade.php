@@ -1,10 +1,6 @@
+@extends('layouts.admin')
 
-@php
-    $routeName = \Request::route()->getName();
-    $route = explode('.', $routeName);
-    $removeS = rtrim($route[0], 's');
-
-@endphp
+@section('content')
     <div class="dashboard-wrapper">
         <div class="container-fluid  dashboard-content">
             <!-- ============================================================== -->
@@ -14,9 +10,8 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="page-header">
                         <h2 class="pageheader-title">
-                            {{ $title }}
+                            All Orders
                         </h2>
-                        <a href="{{ route($route[0]. '.create') }}">Add new {{ $removeS }}</a>
                     </div>
                 </div>
             </div>
@@ -29,8 +24,8 @@
                 <div class="alert alert-danger">
                     {{ session('error') }}
                 </div>
-            @endif
-            <!-- ============================================================== -->
+        @endif
+        <!-- ============================================================== -->
             <!-- end pageheader -->
             <!-- ============================================================== -->
             <div class="row">
@@ -45,41 +40,39 @@
                                 <table class="table table-striped table-bordered first">
                                     <thead>
                                     <tr>
-                                        @foreach($tableRowsTitle as $t)
-                                            <th>{{ $t }}</th>
-                                        @endforeach
+                                        <td>id</td>
+                                        <td>Status</td>
+                                        <td>Details</td>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($tableRowContent as $t)
-                                        <tr>
-                                            @foreach(get_object_vars($t) as $var => $val)
-                                                <td>{{ $val }}</td>
-                                            @endforeach
-                                                <form action="{{route($route[0] . '.edit', [array_values(get_object_vars($t))[0]]) }}" method="get">
+                                        @foreach($orders as $o )
+                                            <tr>
+                                                <td>{{ $o->id_order }}</td>
+                                                <td>
+                                                    @if($o->active == 0)
+                                                        <span class="badge badge-warning">Pending</span>
+                                                    @elseif($o->active == 1)
+                                                        <span class="badge badge-success">Confirmed</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Declined</span>
+                                                    @endif
+                                                </td>
+                                                <td><a href="{{ route('orders.show', $o->id_order) }}" class="btn btn-info">Details</a></td>
+                                            </tr>
 
-                                                    <td><button class="btn btn-success" type="submit">Edit</button></td>
-                                                </form>
-                                                <form action="{{route($route[0] . '.destroy', array_values(get_object_vars($t))[0]) }}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <td><button class="{{ $classDelete ?? ''}} btn btn-danger" data-idgame="{{ array_values(get_object_vars($t))[0] }}" type="submit">Delete</button></td>
-                                                </form>
-{{--                                            <td><a href="{{url($route[0]. '/' . array_values(get_object_vars($t))[0] . '/edit') }}">Edit</a></td>--}}
-                                        </tr>
-
-                                    @endforeach
+                                        @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        @foreach($tableRowsTitle as $t)
-                                            <th>{{ $t }}</th>
-                                        @endforeach
+                                        <td>id</td>
+                                        <td>Status</td>
+                                        <td>Details</td>
                                     </tr>
                                     </tfoot>
 
                                 </table>
-                                {{ $tableRowContent->appends($_GET)->links() }}
+                                {{ $orders->appends($_GET)->links() }}
                             </div>
                         </div>
                     </div>
@@ -92,4 +85,4 @@
         </div>
         <!-- ============================================================== -->
 
-
+@endsection

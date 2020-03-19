@@ -5,9 +5,9 @@
         <!-- Image -->
         <div class="image">
             @if(0 < $discount && $discount < 100)
-            <span class="label sale">sale</span>
+            <span class="label sale" style="color: #f5d730;">sale</span>
             @endif
-            <a href="{{ route("games", $id_game) }}" class="img"><img src="{{ asset($single_photo) }}" alt="{{ $game_name }}"></a>
+            <a href="{{ route("games", $id_game) }}" class="img"><img src="{{ asset('/assets/images/product/'.$single_photo) }}" alt="{{ $game_name }}"></a>
 
             <div class="wishlist-compare">
                 <a href="#" class="addWish" data-idgame="{{ $id_game }}" data-tooltip="Wishlist"><i class="ti-heart"></i></a>

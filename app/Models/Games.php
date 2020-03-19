@@ -7,6 +7,9 @@
 namespace App\Models;
 
 
+use App\Http\Requests\AddGameRequest;
+use App\Http\Requests\EditGameRequest;
+
 class Games
 {
     public function getTo6Games() {
@@ -73,7 +76,7 @@ class Games
 
         switch ($sortby) {
             case 'date':
-                $query = $query->latest();
+                $query = $query->latest('games.created_at');
                 break;
             case 'priceasc':
                 $query = $query->orderBy('games.price', 'asc');
@@ -107,4 +110,50 @@ class Games
             ->where(['id_game' => $idGame])
             ->first();
     }
+
+
+    //Admin
+
+    public function getAllGamesWithPagination() {
+        return \DB::table('games')
+            ->select('id_game', 'game_name', 'price', 'discount')
+            ->orderByDesc('updated_at')
+            ->paginate(7);
+    }
+
+    public function insertGame(AddGameRequest $request) {
+        return \DB::table('games')
+            ->insertGetId([
+                'game_name' => $request->input('game_name'),
+                'game_link' => $request->input('game_link'),
+                'game_info' => '',
+                'price' => $request->input('price'),
+                'discount' => $request->input('discount') ?? 0,
+                'id_category' => $request->input('categoriesDll'),
+                'created_at' => date("Y-m-d H-i-s", time()),
+                'updated_at' => date("Y-m-d H-i-s", time())
+            ]);
+    }
+
+    public function deleteGame($id) {
+        \DB::table('games')
+            ->where(['id_game' => $id])
+            ->delete();
+    }
+
+    public function updateGame(EditGameRequest $request, $id) {
+        \DB::table('games')
+            ->where(['id_game' => $id])
+            ->update([
+                'game_name' => $request->input('game_name'),
+                'game_link' => $request->input('game_link'),
+                'game_info' => '',
+                'price' => $request->input('price'),
+                'discount' => $request->input('discount') ?? 0,
+                'id_category' => $request->input('categoriesDll'),
+                'updated_at' => date("Y-m-d H-i-s", time())
+            ]);
+
+    }
+
 }

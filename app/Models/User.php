@@ -44,9 +44,13 @@ class User
             ->insert(['email' => $request->input('email')]);
     }
 
+    public function getAllSubs() {
+        return \DB::table('subscribers')->get();
+    }
+
 
     //Admin
-    public function getAllUsers() {
+    public function getAllUsersWithPagination() {
         return \DB::table('users')
             ->join('roles', 'users.id_role', '=', 'roles.id_role')
             ->select('id_user', 'username', 'email', 'active', 'role')

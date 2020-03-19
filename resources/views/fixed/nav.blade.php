@@ -16,7 +16,11 @@
                         <a href="{{ route('login') }}"><i class="icofont icofont-user-alt-7"></i> <span class="">my account</span></a>
                         @else
                             <span style="line-height: 30px" class="ml-2">{{ session('user')->username }}</span>
-                            <a href="{{ url('logout') }}"><span class="">Logout</span></a>
+                            @if(session()->has('user') && session('user')->id_role == 1)
+                            <a href="{{ route('users.index') }}"><span class="">AdminPanel</span></a>
+                            @endif
+                            <a href="{{ route('orders') }}"><span class="">Orders</span></a>
+                            <a href="{{ route('logout') }}"><span class="">Logout</span></a>
                         @endif
                     </div><!-- Header Account Links End -->
                 </div>

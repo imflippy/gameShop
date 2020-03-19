@@ -3,14 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                    2020 © Influence - Designed and Developed by<a href="https://themeforest.net/user/jitu/portfolio" target="_blank" class="ml-1">Jituchuahan</a>.
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <div class="text-md-right footer-links d-none d-sm-block">
-                        <a href="javascript: void(0);">About</a>
-                        <a href="javascript: void(0);">Support</a>
-                        <a href="javascript: void(0);">Contact Us</a>
-                    </div>
+                    <div class="footer-copyright"><p>&copy; Copyright, All Rights Reserved by <a href="https://www.linkedin.com/in/filip-minic-4963a0175/">Filip Minic 138/17</a> <a href="documentation.pdf">Documentation</a></p></div>
                 </div>
             </div>
         </div>
@@ -41,7 +34,7 @@
 <script src="{{ asset('Aassets/libs/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
 
 
-
+<script src="{{ asset('assets/js/ee.js') }}"></script>
 {{--<script src="{{ asset('Aassets/libs/daterangepicker/moment.min.js') }}"></script>--}}
 {{--<script src="{{ asset('Aassets/libs/daterangepicker/daterangepicker.js') }}"></script>--}}
 {{--<script src="{{ asset('Aassets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>--}}

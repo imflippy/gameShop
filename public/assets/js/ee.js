@@ -30,6 +30,11 @@ $(document).on({
     ajaxStop: function() { $body.removeClass("loading"); }
 });
 
+$('.deleteGame').click(function () {
+    let idGame = $('.deleteGame').data('idgame');
+    obrisiKorpu(idGame);
+
+});
 
 $(document).ready(function(){
 
@@ -327,7 +332,7 @@ function printAllWishes(data) {
     data.forEach(d => {
         html += `
            <tr>
-                <td class="pro-thumbnail"><a href="games/${d.id_game}"><img src="${d.photos[0].single_photo}" alt="${d.game_name}"></a></td>
+                <td class="pro-thumbnail"><a href="games/${d.id_game}"><img src="/assets/images/product/${d.photos[0].single_photo}" alt="${d.game_name}"></a></td>
                 <td class="pro-title"><a href="games/${d.id_game}">${d.game_name}</a></td>
                 <td class="pro-price"><span>$${calculatePrice(d.price, d.discount)}</span></td>
                 <td class="pro-addtocart"><button><a href="games/${d.id_game}" style="color: #000000">Visit</a></button></td>
@@ -420,7 +425,7 @@ function napraviTabelu(data){
 
     function napraviTr(p){
         return ` <li>
-                    <a class="image" href="${ appentToUrl("/games/" +p.id_game) }"><img src="${rootUrl + "/" + p.photos[0].single_photo}" alt="Product"></a>
+                    <a class="image" href="${ appentToUrl("/games/" +p.id_game) }"><img src="${rootUrl + "/assets/images/product/" + p.photos[0].single_photo}" alt="Product"></a>
                     <div class="content">
                         <a href="${ appentToUrl("/games/" +p.id_game) }" class="title">${p.game_name}</a>
                         <span class="price">Price: $${calculatePrice(p.price, p.discount)}</span>

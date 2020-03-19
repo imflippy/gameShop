@@ -38,4 +38,12 @@ class Wishes
             ->where(['id_user' => $idUser])
             ->count();
     }
+
+    public function deleteWishWithIdGame($idGame) {
+        \DB::table('wishes')->where(['id_game' => $idGame])->delete();
+    }
+
+    public function deleteUserWish($idUser) {
+        \DB::table('wishes')->where(['id_user' => $idUser])->delete();
+    }
 }

@@ -31,7 +31,13 @@ class SendMailer
             $mail->Port = 587;
 
             $mail->setFrom('happenings1566@gmail.com', $title);
-            $mail->addAddress($reciver);
+            if(gettype($reciver) == 'array'){
+                foreach ($reciver as $r){
+                    $mail->addAddress($r);
+                }
+            } else{
+                $mail->addAddress($reciver);
+            }
 
             $mail->isHTML(true);
             // Set email format to HTML

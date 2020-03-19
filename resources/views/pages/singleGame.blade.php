@@ -15,7 +15,7 @@
                     <div class="tab-content">
                         <div id="single-image-1" class="tab-pane fade show active big-image-slider">
                             @foreach($game->photos as $p)
-                                <div class="big-image"><img src="{{ asset($p->single_photo) }}" alt="Big Image"><a href="assets/images/single-product/big-3.png" class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
+                                <div class="big-image"><img src="{{ asset('/assets/images/product/' . $p->single_photo) }}" alt="Big Image"><a href="assets/images/single-product/big-3.png" class="big-image-popup"><i class="fa fa-search-plus"></i></a></div>
                             @endforeach
                         </div>
 
