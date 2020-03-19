@@ -56,23 +56,22 @@
                         </div>
 
                         <div class="desc">
-                            <p>{{ $game->game_info }} </p>
+                            <h5>Genre</h5>
+
+                            @foreach($game->genres as $c)
+                                <a href="{{ route('filter', ['genre[]' => $c->id_genre]) }}">{{ $c->genre }}</a>
+                            @endforeach
                         </div>
 
 
-                        <div class="quantity-genres mb-3">
-
-                            <div class="genres">
-                                <h5>Genre</h5>
-
-                                    @foreach($game->genres as $c)
-                                    <a href="{{ route('filter', ['genre[]' => $c->id_genre]) }}">{{ $c->genre }}</a>
-                                    @endforeach
-
+                            <div class="row">
+                                <div class="single-product-description-content col-lg-8 col-12">
+                                    <p>Check more info on link: <a href="{{ $game->game_link }}" style="color: #f5d730">{{ $game->game_name }}</a></p>
+                                </div>
 
                             </div>
 
-                        </div>
+
 
                         <div class="actions">
 
@@ -101,22 +100,12 @@
             <div class="col-lg-10 col-12 ml-auto mr-auto">
 
                 <ul class="single-product-tab-list nav">
-                    <li><a href="#product-description" class="active" data-toggle="tab" >description</a></li>
                     <li><a href="#product-reviews" data-toggle="tab" >reviews</a></li>
                 </ul>
 
                 <div class="single-product-tab-content tab-content">
-                    <div class="tab-pane fade show active" id="product-description">
 
-                        <div class="row">
-                            <div class="single-product-description-content col-lg-8 col-12">
-                                {{ $game->game_info }}
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="tab-pane fade" id="product-reviews">
+                    <div class="tab-pane fade show active" id="product-reviews">
 
                         <div class="product-ratting-wrap">
                             <div class="pro-avg-ratting">

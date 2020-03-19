@@ -126,7 +126,6 @@ class Games
             ->insertGetId([
                 'game_name' => $request->input('game_name'),
                 'game_link' => $request->input('game_link'),
-                'game_info' => '',
                 'price' => $request->input('price'),
                 'discount' => $request->input('discount') ?? 0,
                 'id_category' => $request->input('categoriesDll'),
@@ -147,7 +146,6 @@ class Games
             ->update([
                 'game_name' => $request->input('game_name'),
                 'game_link' => $request->input('game_link'),
-                'game_info' => '',
                 'price' => $request->input('price'),
                 'discount' => $request->input('discount') ?? 0,
                 'id_category' => $request->input('categoriesDll'),

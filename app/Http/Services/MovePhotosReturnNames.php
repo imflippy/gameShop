@@ -17,7 +17,7 @@ class MovePhotosReturnNames
         foreach ($arrayPhotos as $ap) {
             $photosName = time(). "_". $ap->getClientOriginalName();
             $photosNames[] = $photosName;
-            $ap->move(\public_path() . "/assets/images/product/", $photosName);
+            $ap->move(public_path() . "/assets/images/product/", $photosName);
         }
         return $photosNames;
     }

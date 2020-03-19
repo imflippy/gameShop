@@ -110,7 +110,7 @@
 
                 <!-- Footer Payment Support -->
                 <div class="col-lg-6 col-12">
-                    <div class="footer-payments-image"><img src="assets/images/payment-support.png" alt="Payment Support Image"></div>
+                    <div class="footer-payments-image"><img src="{{ asset('assets/images/payment-support.png') }}" alt="Payment Support Image"></div>
                 </div>
 
             </div>
