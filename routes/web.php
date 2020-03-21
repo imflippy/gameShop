@@ -65,6 +65,7 @@ Route::group(['middleware'  => ['authorise404']], function () {
 
     //API PREFIX
     Route::prefix('api')->group(function () {
+        Route::get('/getProductsForCart', 'GameController@cartGames');
         //Wishlist Page
         Route::get('/wishlist', 'WishController@getAllWishesForOneUser');
 
@@ -109,6 +110,8 @@ Route::group(['middleware'  => ['admin']], function () {
         Route::get('/orders/{id}', 'Admin\OrdersController@show')->name('orders.show');
         Route::put('/orders/confirm', 'Admin\OrdersController@confirm')->name('orders.confirm');
         Route::put('/orders/decline', 'Admin\OrdersController@decline')->name('orders.decline');
+
+        Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
 
     });
 });

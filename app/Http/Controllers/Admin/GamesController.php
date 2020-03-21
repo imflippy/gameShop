@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddGameRequest;
 use App\Http\Requests\EditGameRequest;
 use App\Http\Services\BackWithError;
+use App\Http\Services\LogCatchs;
 use App\Http\Services\MovePhotosReturnNames;
 use App\Models\Categories;
 use App\Models\Comments;
@@ -77,8 +78,9 @@ class GamesController extends Controller
             \DB::commit();
             return redirect()->route('games.index')->with('success', 'Game has been added');
         } catch (\PDOException $ex) {
-            echo $ex->getMessage();
             \DB::rollBack();
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\GamesController@store');
+            return BackWithError::backWtihError();
         }
 
     }
@@ -142,8 +144,9 @@ class GamesController extends Controller
             \DB::commit();
             return redirect()->route('games.index')->with('success', 'Game has been updated');
         } catch (\PDOException $ex) {
-            echo $ex->getMessage();
             \DB::rollBack();
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\GamesController@update');
+            return BackWithError::backWtihError();
         }
 
     }
@@ -172,7 +175,7 @@ class GamesController extends Controller
         } catch (\PDOException $ex) {
 
             \DB::rollBack();
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\GamesController@destroy');
             return BackWithError::backWtihError('You cant remove this game becouse its in orders.');
         }
     }

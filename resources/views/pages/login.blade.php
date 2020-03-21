@@ -67,6 +67,7 @@
                                             @method('PATCH')
                                             <div class="title_reset">
                                                 <h2>You'r new password will be sent on you'r email.</h2>
+                                                <p>You wont be able to set custom password again.</p>
                                             </div>
                                             <div>
                                                 @component("components.formElements.textBox", ["name" => "reset_email", "placeholder" => "Enter your email here..."])

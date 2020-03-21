@@ -23,6 +23,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Route::get('/getProductsForCart/{$ids?}', 'GameController@cartGames');
 
-    Route::get('/getProductsForCart', 'GameController@cartGames');
 
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\EditUserRequest;
+use App\Http\Services\BackWithError;
+use App\Http\Services\LogCatchs;
 use App\Models\Comments;
 use App\Models\User;
 use App\Models\Wishes;
@@ -54,7 +56,8 @@ class UsersController extends Controller
             $this->modelUser->registerUser($request);
             return redirect()->route('users.index')->with('success', 'User has been added');
         } catch (\PDOException $ex) {
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\UsersController@store');
+            return BackWithError::backWtihError();
         }
     }
 
@@ -97,7 +100,8 @@ class UsersController extends Controller
             $this->modelUser->updateUser($request, $id);
             return redirect()->route('users.index')->with('success', 'User has been updated');
         } catch (\PDOException $ex) {
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\UsersController@update');
+            return BackWithError::backWtihError();
         }
     }
 
@@ -123,6 +127,8 @@ class UsersController extends Controller
         } catch (\PDOException $ex) {
 
             \DB::rollBack();
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\UsersController@destroy');
+            return BackWithError::backWtihError();
         }
     }
 }

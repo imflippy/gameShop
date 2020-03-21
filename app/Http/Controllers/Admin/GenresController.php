@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddGenreRequest;
 use App\Http\Requests\EditGenreRequest;
+use App\Http\Services\BackWithError;
+use App\Http\Services\LogCatchs;
 use App\Models\Genres;
 use Illuminate\Http\Request;
 
@@ -49,7 +51,8 @@ class GenresController extends Controller
             return redirect()->route('genres.index')->with('success', 'Genre has been added');
 
         } catch (\PDOException $ex){
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\GernesController@store');
+            return BackWithError::backWtihError();
         }
     }
 
@@ -90,7 +93,8 @@ class GenresController extends Controller
             $this->modelGenre->updateGenre($request, $id);
             return redirect()->route('genres.index')->with('success', 'Genre has been updated');
         } catch (\PDOException $ex) {
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\GernesController@update');
+            return BackWithError::backWtihError();
         }
     }
 
@@ -107,7 +111,8 @@ class GenresController extends Controller
             return redirect()->route('genres.index')->with('success', 'Genre has been removed');
 
         } catch (\PDOException $ex) {
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\GernesController@destroy');
+            return BackWithError::backWtihError();
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\GetGamePhotos;
+use App\Http\Services\LogCatchs;
 use App\Models\Wishes;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,9 @@ class WishController extends Controller
             return response('You have successfully added game to Wishlist', 201);
 
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'WishController@addNewWish');
+
+            return response(null, 500);
         }
     }
 
@@ -47,7 +50,9 @@ class WishController extends Controller
             return response($info);
 
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'WishController@getAllWishesForOneUser');
+
+            return response(null, 500);
         }
     }
 
@@ -59,7 +64,9 @@ class WishController extends Controller
 
             return response(null, 204);
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'WishController@deleteWishFromWishes');
+
+            return response(null, 500);
         }
 
     }
@@ -73,7 +80,9 @@ class WishController extends Controller
             return response($info);
 
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'WishController@numberOfWishes');
+
+            return response(null, 500);
         }
     }
 

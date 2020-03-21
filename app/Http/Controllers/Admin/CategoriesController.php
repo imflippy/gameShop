@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
+use App\Http\Services\BackWithError;
+use App\Http\Services\LogCatchs;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 
@@ -49,7 +51,8 @@ class CategoriesController extends Controller
             return redirect()->route('categories.index')->with('success', 'Category has been added');
 
         } catch (\PDOException $ex){
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\CategorisController@store');
+            return BackWithError::backWtihError();
         }
     }
 
@@ -90,7 +93,8 @@ class CategoriesController extends Controller
             $this->modelCategory->updateCategory($request, $id);
             return redirect()->route('categories.index')->with('success', 'Category has been updated');
         } catch (\PDOException $ex) {
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\CategorisController@update');
+            return BackWithError::backWtihError();
         }
     }
 
@@ -107,7 +111,8 @@ class CategoriesController extends Controller
             return redirect()->route('categories.index')->with('success', 'Category has been removed');
 
         } catch (\PDOException $ex) {
-
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\CategorisController@destroy');
+            return BackWithError::backWtihError();
         }
     }
 }

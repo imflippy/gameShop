@@ -10,7 +10,7 @@
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ asset('Aassets/css/theme.min.css') }}">
-
+    @yield('head')
 
 </head>
 

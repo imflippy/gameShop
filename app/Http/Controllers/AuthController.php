@@ -7,6 +7,8 @@ use App\Http\Requests\ContactRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\ResetRequest;
+use App\Http\Services\BackWithError;
+use App\Http\Services\LogCatchs;
 use App\Http\Services\SendMailer;
 use App\Http\Services\UserWishes;
 use App\Models\User;
@@ -65,7 +67,7 @@ class AuthController extends Controller
 
         } catch(\PDOException $ex) {
             return redirect()->back()->withInput();
-            return response(["Error with register" => $ex->getMessage()], 500);
+            LogCatchs::writeLog($ex->getMessage(), 'AuthController@doRegister');
         }
 
     }
@@ -79,16 +81,21 @@ class AuthController extends Controller
 
         $newPass = substr(sha1(rand()) . time(), 0, 10). "!";
         $email = $request->input("reset_email");
+        try {
+            $this->modelUser->resetPassword($email, $newPass);
 
-        $this->modelUser->resetPassword($email, $newPass);
+            $title = 'E&E Reset Password Request';
+            $body ="Your new password is: {$newPass}";
+            $subject = 'Password Reset';
 
-        $title = 'E&E Reset Password Request';
-        $body ="Your new password is: {$newPass}";
-        $subject = 'Password Reset';
+            $adminMail = 'filip.minic98@gmail.com'; // privremeno
+            SendMailer::sendMail($title, $subject, $body, $adminMail);
+            return redirect()->route('login')->with('success', "Check mail for new password.");
+        } catch (\PDOException $ex) {
+            LogCatchs::writeLog($ex->getMessage(), 'AuthController@reset');
+            return BackWithError::backWtihError();
+        }
 
-        $adminMail = 'filip.minic98@gmail.com'; // privremeno
-        SendMailer::sendMail($title, $subject, $body, $adminMail);
-        return redirect()->route('login')->with('success', "Check mail for new password.");
     }
 
     public function sendContact(ContactRequest $request) {
@@ -99,7 +106,8 @@ class AuthController extends Controller
             SendMailer::sendMail($title, $request->input('email'), $request->input('message'), $adminMail);
             return response(null, 201);
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'AuthController@sendContact');
+            return response(null, 500);
         }
     }
 
@@ -107,7 +115,8 @@ class AuthController extends Controller
         try {
             $this->modelUser->addSubscriber($request);
         } catch (\PDOException $ex) {
-            return response(["Error with register" => $ex->getMessage()], 500);
+            LogCatchs::writeLog($ex->getMessage(), 'AuthController@addSubsciber');
+            return response(null, 500);
         }
     }
 

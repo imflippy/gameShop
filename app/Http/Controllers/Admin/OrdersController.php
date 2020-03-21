@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderIdRequest;
 use App\Http\Services\BackWithError;
 use App\Http\Services\GetGamePhotos;
+use App\Http\Services\LogCatchs;
 use App\Http\Services\SendMailer;
 use App\Models\Orders;
 use Illuminate\Http\Request;
@@ -58,6 +59,7 @@ class OrdersController extends Controller
             return redirect()->route('orders.index')->with('success', 'Order Confirmed');
 
         } catch (\PDOException $ex) {
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\OrdersController@confirm');
             return BackWithError::backWtihError();
         }
     }
@@ -71,8 +73,8 @@ class OrdersController extends Controller
             return redirect()->route('orders.index')->with('success', 'Order Declined');
 
         } catch (\PDOException $ex) {
-            return BackWithError::backWtihError();
-        }
+            LogCatchs::writeLog($ex->getMessage(), 'Admin\OrdersController@decline');
+            return BackWithError::backWtihError();         }
     }
 
 

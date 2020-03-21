@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FilterRequest;
 use App\Http\Services\GetGamePhotos;
+use App\Http\Services\LogCatchs;
 use App\Http\Services\UserWishes;
 use App\Models\Categories;
 use App\Models\Genres;
@@ -28,7 +29,9 @@ class GameController extends Controller
 
             return response($info, 200);
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'GameController@cartGames');
+
+            return response(null, 500);
         }
     }
 

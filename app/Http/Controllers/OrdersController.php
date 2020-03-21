@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutRequest;
+use App\Http\Services\LogCatchs;
 use App\Http\Services\PriceWithDiscount;
 use App\Models\Orders;
 use Illuminate\Http\Request;
@@ -27,8 +28,10 @@ class OrdersController extends Controller
 
             return response(null, 201);
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'OrdersController@store');
             \DB::rollBack();
+            return response(null, 500);
+
         }
     }
 }

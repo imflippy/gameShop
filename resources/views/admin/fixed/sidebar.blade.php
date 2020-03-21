@@ -55,13 +55,17 @@
                             </ul>
                         </div>
                     </li>
+
                     <li class="nav-item ">
                         <a class="nav-link" href="{{ route('orders.index') }}"><i class="fas fa-cart-arrow-down"></i>Orders</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link" href="{{ route('subs.index') }}"><i class="fa fa-envelope" aria-hidden="true"></i> Subscription</a>
                     </li>
-
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{ route('logs')  }}" ><i class="fas fa-book-open"></i>
+                            Logs</a>
+                    </li>
                 </ul>
             </div>
         </nav>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReviewRequest;
+use App\Http\Services\LogCatchs;
 use App\Models\Comments;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,9 @@ class CommentsController extends Controller
         try {
             return response($this->modelCommments->getAllReviewsForOneGame($request), 200);
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'CommentsController@index');
+
+            return response(null, 500);
         }
 
     }
@@ -35,7 +38,8 @@ class CommentsController extends Controller
             $this->modelCommments->addReview($request);
             return response(null, 201);
         } catch (\PDOException $ex){
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'CommentsController@store');
+            return response(null, 500);
         }
     }
 
@@ -45,7 +49,8 @@ class CommentsController extends Controller
             $this->modelCommments->deleteComment($request);
             return response(null, 204);
         } catch (\PDOException $ex) {
-            return response($ex->getMessage(), 500);
+            LogCatchs::writeLog($ex->getMessage(), 'CommentsController@destroy');
+            return response(null, 500);
         }
     }
 }
