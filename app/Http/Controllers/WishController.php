@@ -30,6 +30,8 @@ class WishController extends Controller
             }
 
             $this->modelWishes->addwish($idGame, $idUser);
+            LogCatchs::writeLogSuccess('User: ' . session('user')->username . ',  Action: Add Wish');
+
             return response('You have successfully added game to Wishlist', 201);
 
         } catch (\PDOException $ex) {
@@ -61,6 +63,7 @@ class WishController extends Controller
 
         try {
             $this->modelWishes->deleteWishFromWishes($idWish);
+            LogCatchs::writeLogSuccess('User: ' . session('user')->username . ',  Action: Remove Wish');
 
             return response(null, 204);
         } catch (\PDOException $ex) {

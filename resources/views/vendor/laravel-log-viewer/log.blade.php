@@ -73,7 +73,7 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="page-header">
                         <h2 class="pageheader-title">
-                            laravel.log - All catches, laravel-date - User daily activity
+                            laravel.log - All important actions, laravel-date - User daily activity
                         </h2>
                     </div>
                 </div>

@@ -32,10 +32,13 @@ class CommentsController extends Controller
 
         if($this->modelCommments->checkIfUserHasPostedReview($request)){
             $this->modelCommments->updateReview($request);
+            LogCatchs::writeLogSuccess('User: ' . session('user')->username . ',  Action: Edit Comment');
+
             return response(null, 204);
         }
         try {
             $this->modelCommments->addReview($request);
+            LogCatchs::writeLogSuccess('User: ' . session('user')->username . ',  Action: Add Comment');
             return response(null, 201);
         } catch (\PDOException $ex){
             LogCatchs::writeLog($ex->getMessage(), 'CommentsController@store');
@@ -47,6 +50,7 @@ class CommentsController extends Controller
     public function destroy(Request $request) {
         try {
             $this->modelCommments->deleteComment($request);
+            LogCatchs::writeLogSuccess('User: ' . session('user')->username . ',  Action: Remove Comment');
             return response(null, 204);
         } catch (\PDOException $ex) {
             LogCatchs::writeLog($ex->getMessage(), 'CommentsController@destroy');

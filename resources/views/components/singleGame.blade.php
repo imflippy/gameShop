@@ -1,11 +1,11 @@
 <div class="col-xl-4 col-md-6 col-12 pb-30 pt-10">
     <!-- Product Start -->
-    <div class="ee-product">
+    <div class="ee-product" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%">
 
         <!-- Image -->
         <div class="image">
             @if(0 < $discount && $discount < 100)
-            <span class="label sale" style="color: #f5d730;">sale</span>
+            <span class="label sale" style="border: 10px solid #f5d730; background-color: #f5d730; border-radius: 50%; color:#000;">sale</span>
             @endif
             <a href="{{ route("games", $id_game) }}" class="img"><img src="{{ asset('/assets/images/product/'.$single_photo) }}" alt="{{ $game_name }}"></a>
 

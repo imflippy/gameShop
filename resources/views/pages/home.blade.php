@@ -37,10 +37,10 @@
                         @foreach($slider as $s)
                         <!-- Hero Item Start -->
                         <div class="hero-item-three" style="background-image: url({{ asset('assets/images/hero/hero-3-bg-1.jpg') }})">
-                            <div class="row align-items-center justify-content-between">
+                            <div class="row align-items-center justify-content-between" style='position: relative;'>
 
                                 <!-- Hero Content -->
-                                <div class="hero-content-three col">
+                                <div class="hero-content-three col" style="z-index: 1000">
 
                                     <h2 class="offer">{{ $s->discount }}% <span>OFF</span></h2>
                                     <h1>PLAY <br> {{ $s->game_name }} <br> ANY TIME</h1>
@@ -49,7 +49,7 @@
                                 </div>
 
                                 <!-- Hero Image -->
-                                <div class="hero-image-three col">
+                                <div class="hero-image-three col" style="position:absolute; top: -30px; right: 0;">
                                     <img src="{{ asset('/assets/images/product/' . $s->photos[0]->single_photo) }}" alt="{{ $s->game_name }}" style="width: 240px; height: 240px;border-radius: 40px">
                                 </div>
 

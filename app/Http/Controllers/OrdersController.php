@@ -25,7 +25,7 @@ class OrdersController extends Controller
 
 
             \DB::commit();
-
+            LogCatchs::writeLogSuccess('User: ' . session('user')->username . ',  Action: Checkout');
             return response(null, 201);
         } catch (\PDOException $ex) {
             LogCatchs::writeLog($ex->getMessage(), 'OrdersController@store');

@@ -33,7 +33,7 @@ class AuthController extends Controller
 
         if ($user) {
             $request->session()->put('user', $user);
-
+            LogCatchs::writeLogSuccess('User: ' . $user->username . 'm Action: Login');
             return redirect()->route('home');
         } else {
             return redirect()->route('login')->with('wrongPass', 'Wrong Password or Account is Inactive!');
@@ -43,6 +43,7 @@ class AuthController extends Controller
 
 
     public function logout(Request $request) {
+        LogCatchs::writeLogSuccess('User: ' . session('user')->username . ',  Action: Logout');
         $request->session()->forget("user");
         return redirect()->route('login')->with('success', 'You are not logged anymore!');
     }
@@ -62,7 +63,7 @@ class AuthController extends Controller
             $subject = 'Activation';
             $adminMail = 'filip.minic98@gmail.com';
             SendMailer::sendMail($title, $subject, $body, $adminMail);
-
+            LogCatchs::writeLogSuccess('User: ' . $username . ',  Action: Register');
             return redirect()->back()->with('success', 'Go to your mail and confirm registration');
 
         } catch(\PDOException $ex) {
@@ -90,6 +91,7 @@ class AuthController extends Controller
 
             $adminMail = 'filip.minic98@gmail.com'; // privremeno
             SendMailer::sendMail($title, $subject, $body, $adminMail);
+            LogCatchs::writeLogSuccess('User: ' . $email . ', Action: Reset password');
             return redirect()->route('login')->with('success', "Check mail for new password.");
         } catch (\PDOException $ex) {
             LogCatchs::writeLog($ex->getMessage(), 'AuthController@reset');
@@ -104,6 +106,8 @@ class AuthController extends Controller
             $adminMail = 'filip.minic98@gmail.com';
 
             SendMailer::sendMail($title, $request->input('email'), $request->input('message'), $adminMail);
+            LogCatchs::writeLogSuccess('User: ' . $request->input('email') . ',  Action: Contact Form');
+
             return response(null, 201);
         } catch (\PDOException $ex) {
             LogCatchs::writeLog($ex->getMessage(), 'AuthController@sendContact');
@@ -114,6 +118,8 @@ class AuthController extends Controller
     public function addSubscriber(AddSubscriberRequest $request) {
         try {
             $this->modelUser->addSubscriber($request);
+            LogCatchs::writeLogSuccess('User: ' . $request->input('email') . ',  Action: Subscribed');
+
         } catch (\PDOException $ex) {
             LogCatchs::writeLog($ex->getMessage(), 'AuthController@addSubsciber');
             return response(null, 500);
