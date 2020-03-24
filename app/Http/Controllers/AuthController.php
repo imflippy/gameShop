@@ -61,8 +61,8 @@ class AuthController extends Controller
             $title = 'E&E Email Verification Required';
             $body = "Activate your account by clicking on: <a href='http://127.0.0.1:8000/confirm/{$token}'>This link</a>";
             $subject = 'Activation';
-            $adminMail = 'filip.minic98@gmail.com';
-            SendMailer::sendMail($title, $subject, $body, $adminMail);
+
+            SendMailer::sendMail($title, $subject, $body, $email);
             LogCatchs::writeLogSuccess('User: ' . $username . ',  Action: Register');
             return redirect()->back()->with('success', 'Go to your mail and confirm registration');
 
@@ -89,8 +89,8 @@ class AuthController extends Controller
             $body ="Your new password is: {$newPass}";
             $subject = 'Password Reset';
 
-            $adminMail = 'filip.minic98@gmail.com'; // privremeno
-            SendMailer::sendMail($title, $subject, $body, $adminMail);
+
+            SendMailer::sendMail($title, $subject, $body, $email);
             LogCatchs::writeLogSuccess('User: ' . $email . ', Action: Reset password');
             return redirect()->route('login')->with('success', "Check mail for new password.");
         } catch (\PDOException $ex) {

@@ -112,7 +112,7 @@ function addReview() {
                     swal("Thank You!", "Your reviews has been updated", "success");
                 },
                 404: function () {
-                    swal("You must login to achive wish command", '', "error");
+                    swal("You must login to achive review command", '', "error");
                 },
                 500: function () {
                     swal('We will fix this ASAP', '', "error");
@@ -129,7 +129,7 @@ function addReview() {
 }
 
 function getAllReviewsForOneGame() {
-    let idGame = $('.auth').data('idgame');
+    let idGame = $('.addWish').data('idgame');
     $.ajax({
         url: appentToUrl('/api/getAllReviewsForOneGame'),
         method: 'GET',
@@ -138,8 +138,10 @@ function getAllReviewsForOneGame() {
           idGame: idGame
         },
         success: function (data) {
+
             printReviews(data);
             calculateScore(data);
+            console.log(data)
         },
         error: function (xhr, status, error) {
             console.log(error);
@@ -198,6 +200,7 @@ function calculateScore(data) {
 }
 
 function showDeleteButtonForAdmin(id_comment) {
+    console.log(idRole)
     if (idRole == 1) {
         return `<button class="remove" onclick="deleteComment(${id_comment})"><i class="fa fa-trash-o"></i></button>`;
     } else {
@@ -394,6 +397,11 @@ function prikaziKorpu(){
             dataType: "json",
             data: {
                 idsProd: idsProd
+            },
+            statusCode: {
+                404: function () {
+                    obrisiCeluKorpu();
+                }
             },
             success: function(data){
 

@@ -122,6 +122,8 @@
 <script>
     @if(session()->has('user'))
         const idRole = '{{ session('user')->id_role }}';
+    @else
+        const idRole = 0;
     @endif
 </script>
 <!-- JS
